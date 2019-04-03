@@ -1,0 +1,27 @@
+/*Home stylesheet */
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon');
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro');
+
+body {
+  font: 16px/1 'Advent Pro', sans-serif;
+  background:transparent;
+  overflow-y:hidden;
+  overflow-x: hidden;
+}
+
+h1 {
+  padding: 10px 5px 0px 5px;
+  font-weight: 700;
+  text-align: left;
+  font: 37px/1 'Do Hyeon', sans-serif;
+  margin-bottom: 7px;
+  margin-left: 5%;
+  margin-top: 0px;
+  padding-top: 4px;
+}
+
+.logo{
+  height: 7%;
+  width: 4%;
+
+}
