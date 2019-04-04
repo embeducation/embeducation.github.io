@@ -10,11 +10,51 @@
       <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 </head>
 
+
 <body>
 
 <h1> Embeducation
 <img class="logo" src="logo.png">
 </h1>
+
+<visualization>
+	<!-- Section for adding the embedding visualization -->
+	<img src="graph_dummy.png" alt="Dummy graph" class="graph">
+
+</visualization>
+
+<!-- Add text button -->
+<button id="add_text" onclick=""> 
+          <i id="add_text_icon" class="fa fa-plus"></i>
+          Add Text
+</button>
+<br><br>
+
+
+<!-- Nearest Neighbors option -->
+
+Find <select>
+  <option value="1">1</option>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="100">100</option>
+</select>  nearest neighbors for 
+
+<input type="text" name="nearest_neighbor" size="25">
+
+<button id="add_text" onclick="">
+          Go
+</button>
+
+<br> <br>
+
+<!-- Paths option -->
+
+Find path from <input type="text" name="nearest_neighbor" size="25"> to <input type="text" name="nearest_neighbor" size="25">
+
+<button id="add_text" onclick="">
+          Go
+</button>
 
  </body>
 

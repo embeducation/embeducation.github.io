@@ -25,3 +25,23 @@ h1 {
   width: 4%;
 
 }
+
+.graph{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+visualization {
+
+}
