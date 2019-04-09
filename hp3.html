@@ -1,0 +1,404 @@
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://unpkg.com/three"></script>
+        <script src="https://unpkg.com/three.texttexture"></script>
+        <script src="https://unpkg.com/three.textsprite"></script>
+		<script>
+    //'use strict';
+    // 'To actually be able to display anything with Three.js, we need three things:
+    // A scene, a camera, and a renderer so we can render the scene with the camera.'
+    // - https://threejs.org/docs/#Manual/Introduction/Creating_a_scene
+
+    var scene, camera, renderer;
+
+    // I guess we need this stuff too
+    var container, HEIGHT,
+        WIDTH, fieldOfView, aspectRatio,
+        nearPlane, farPlane,
+        geometry, particleCount,
+        i, h, color, size,
+        materials = [],
+        mouseX = 0,
+        mouseY = 0,
+        windowHalfX, windowHalfY, cameraZ,
+        fogHex, fogDensity, parameters = {},
+        parameterCount, particles;
+
+    var datapoints;
+
+    init();
+    animate();
+
+    function init() {
+
+        HEIGHT = window.innerHeight;
+        WIDTH = window.innerWidth;
+        windowHalfX = WIDTH / 2;
+        windowHalfY = HEIGHT / 2;
+
+        fieldOfView = 75;
+        aspectRatio = WIDTH / HEIGHT;
+        nearPlane = 1;
+        farPlane = 3000;
+
+        /* 	fieldOfView — Camera frustum vertical field of view.
+	aspectRatio — Camera frustum aspect ratio.
+	nearPlane — Camera frustum near plane.
+	farPlane — Camera frustum far plane.
+
+	- https://threejs.org/docs/#Reference/Cameras/PerspectiveCamera
+
+	In geometry, a frustum (plural: frusta or frustums)
+	is the portion of a solid (normally a cone or pyramid)
+	that lies between two parallel planes cutting it. - wikipedia.		*/
+
+        cameraZ = farPlane / 3; /*	So, 1000? Yes! move on!	*/
+        fogHex = 0x000000; /* As black as your heart.	*/
+        fogDensity = 0.0007; /* So not terribly dense?	*/
+
+        camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
+        camera.position.z = cameraZ;
+
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(fogHex, fogDensity);
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+        document.body.style.margin = 0;
+        document.body.style.overflow = 'hidden';
+
+        geometry = new THREE.Geometry(); /*	NO ONE SAID ANYTHING ABOUT MATH! UGH!	*/
+
+
+        /*
+        let thenProm = d3.csv("data2.csv").then(function(data){
+            //datapoints = data;
+            //console.log("inside");
+            //console.log(datapoints);
+
+
+            return data;
+        }
+        );
+
+        console.log("DATA");
+
+        console.log(thenProm);
+        */
+
+        var data = 'First,Second,Third\n3.68E-02,5.96E-04,4.16E-03\n0.015524596,-0.0058457,-0.003541731\n0.023384454,-0.001062689,0.00210964\n0.026889591,-0.005753916,-0.000193004\n0.031469506,-0.003969845,-0.000881531\n0.012212931,-8.68E-05,-0.001949914\n0.003858626,0.004810591,-0.002944002\n0.010748081,0.005249444,-0.003697472\n0.017793765,-0.00102414,-0.005251133\n0.005725101,-0.000925238,-0.002049407\n-0.000590799,0.005278551,0.002573964\n0.01200492,0.000128676,0.004325169\n-0.001475393,0.001744516,0.001471328\n0.013635457,0.002683003,0.003965077\n0.013343525,0.003957428,0.000212429\n-0.00067025,0.000899778,0.002545179\n0.004296135,0.006624336,-0.004619717\n-0.00276755,0.001127077,-0.000262265\n0.002064972,-0.003761116,0.001549398\n0.001568443,-0.002387347,0.000829124\n0.000706212,-0.00257054,-0.001765788\n-6.44E-05,0.004244349,0.001634682\n0.001165745,0.000564243,0.004967472\n-0.00725786,-0.000559392,-0.003828306\n0.007843377,0.003399072,0.001316748\n0.003064389,-0.00054775,-0.005880527\n-0.003019557,0.000763509,-0.001838716\n-0.005213258,0.002460533,-0.002584983\n0.002246413,0.002168859,0.001770102\n0.005122186,0.001164062,-0.006609503\n-0.004270607,-0.002938673,0.002520792\n-0.005626236,0.002244475,-0.001747678\n0.007941058,0.002347052,-0.001361016\n-0.003696502,0.000116356,0.003158704\n-0.001400387,-0.001396514,0.002946087\n-0.002118532,-0.002026057,0.002156832\n-0.00175195,-0.000586877,0.002253093\n-0.009824938,-0.002333013,0.001587571\n-0.00964945,-0.000444303,0.002150701\n-0.012467922,-0.00337211,-0.003851277\n-0.001795577,0.003730248,0.001010274\n-0.009653484,0.000505745,-0.004086439\n-0.006457644,-0.001407207,0.002005473\n-0.00939135,-0.006190419,0.000332299\n-0.007103548,-0.002375425,-0.003457683\n-0.01434121,0.001459977,-0.003034856\n-0.00539692,-0.004787347,0.003838228\n-0.006613328,0.000826665,0.001014332\n-0.00498047,-0.00156281,0.002461607\n-0.002112093,-0.001252397,-0.000885978\n-0.006163622,-0.003161473,0.001646949\n-0.000816477,0.007331562,0.002188061\n-0.007277562,-0.003071618,0.002960937\n-0.007944278,-0.002234807,-0.002566123\n-0.009578176,0.00096603,-0.002482304\n-0.012605552,0.001567125,0.003230376\n-0.008753345,-0.001851783,0.001003007\n-0.002905297,-0.000887725,-0.003231551\n-0.010976626,-0.000519181,-0.00198318\n-0.003682666,-0.00366884,0.000399691\n-0.010145803,0.002473025,0.00851905\n-0.005130538,-0.000409786,-0.00288925\n-0.014591398,-0.003657266,-0.000526784\n-0.009234762,0.003478219,0.001050038\n-0.009873174,0.003720039,-0.001864439\n\n'
+
+        var parsed = d3.csvParse(data);
+
+        console.log("PARSED");
+        console.log(parsed);
+        
+        for (i = 1; i < parsed.length; i+=2) {
+
+        var vertex = new THREE.Vector3();
+        vertex.x = parseFloat(parsed[i].First*60000, 10);
+        vertex.y = parseFloat(parsed[i].Second*60000, 10);
+        vertex.z = parseFloat(parsed[i].Third*60000, 10);
+
+        geometry.vertices.push(vertex);
+        
+    }
+
+    console.log("GEOMETRY1");
+    console.log(geometry.vertices);
+
+        //console.log("outside");
+        //console.log(datapoints);
+
+        /*
+        d3.csv("data.csv", function(d){
+            return {
+                first : d.first,
+                second : d.second,
+                third : d.third
+            };
+        }).then(function(data){
+            console.log(data[0]);
+        });
+        */
+
+                /*
+                d3.text("vectors-chapter1.tsv").then(function(data) {
+                    console.log("DATA");
+                    console.log(d3.tsvParseRows(text));
+                });
+                */
+
+        /*
+        d3.tsv("test.tsv").then(function(data){
+            console.log('YES');
+            console.log(data[0]);
+        });
+        */
+
+        /*
+        var string = d3.tsv("test.tsv").then(function(data){
+            return data;
+        })
+
+        //console.log(string);
+
+        string.then(d3.tsvParse(string, function(d){
+
+            return {
+
+                first : d.First,
+                second : d.Second,
+                third : d.Third
+            };
+
+        }));
+
+        console.log(data);
+
+        */
+
+
+        /*
+
+        d3.tsv("test.tsv", function(d){
+            return {
+                First : d.First,
+                Second : d.Second,
+                Third : d.Third
+            };
+
+        }).then(function(data){
+            console.log('YES');
+            console.log(data);
+        });
+        */
+
+
+        /*
+
+        ORIGINAL PARTICLES
+
+        particleCount = 20000; /* Leagues under the sea */
+
+        /*	Hope you took your motion sickness pills;
+	We're about to get loopy.	
+
+        for (i = 0; i < particleCount; i++) {
+
+            var vertex = new THREE.Vector3();
+            vertex.x = Math.random() * 2000 - 1000;
+            vertex.y = Math.random() * 2000 - 1000;
+            vertex.z = Math.random() * 2000 - 1000;
+
+            geometry.vertices.push(vertex);
+        }
+        */
+
+
+        /*	We can't stop here, this is bat country!	*/
+
+        parameters = [
+            [
+                [1, 1, 0.5], 5
+            ],
+            [
+                [0.95, 1, 0.5], 4
+            ],
+            [
+                [0.90, 1, 0.5], 3
+            ],
+            [
+                [0.85, 1, 0.5], 2
+            ],
+            [
+                [0.80, 1, 0.5], 1
+            ]
+        ];
+        parameterCount = parameters.length;
+
+        /*	I told you to take those motion sickness pills.
+	Clean that vommit up, we're going again!	*/
+
+    console.log("GEOMETRY");
+    console.log(geometry.vertices.length);
+
+        for (i = 0; i < parameterCount; i++) {
+
+            color = parameters[i][0];
+            size = parameters[i][1];
+
+            materials[i] = new THREE.PointCloudMaterial({
+                size: size
+            });
+
+            particles = new THREE.PointCloud(geometry, materials[i]);
+
+            particles.rotation.x = Math.random() * 6;
+            particles.rotation.y = Math.random() * 6;
+            particles.rotation.z = Math.random() * 6;
+
+            scene.add(particles);
+        }
+
+
+
+
+        var ltext = "Label\nthe\na\nand\nto\nhe\nwas\nof\nhis\nin\nHe\nthat\n--\non\nas\nhad\nDursley\nit\nhave\nat\nMr.\nI\nbe\nsaid\nProfessor\nall\nwere\nMrs.\nyou\ndidn't\nbut\nout\nIt\nbeen\nshe\nfor\nher\nthey\nDumbledore\nvery\npeople\nover\ninto\ncat\nMcGonagall\nnot\nHarry\nwith\nThe\nup\nback\nhim\nif\nthis\nso\nit.\nabout\ncouldn't\ndown\ntheir\nwould\ncould\nwhat\nnever\neven\nthem\n\n";
+
+        var parsed_labels = d3.csvParse(ltext);
+
+        console.log("PARSED LABELS: ")
+        //console.log(parsed_labels);
+
+        var fontLoader = new THREE.FontLoader();
+
+        //var font  = require('helvetiker_regular.typeface.js');
+        fontLoader.load('helvetiker_regular.typeface.json', function(font) {
+
+            console.log("HERERERERE");
+
+            var textMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00});
+            var textGeometry = new THREE.TextGeometry("HELLO", {
+                font : 'helvetiker_regular',
+                size : 10000,
+                height : 10000
+            });
+
+            var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+            scene.add(textMesh);
+        });
+        
+        /*
+        for (i = 1; i < parsed_labels.length; i+=2) {
+            console.log("HERE")
+            console.log(parsed_labels[i].Label);
+            var textGeo = new THREE.TextGeometry('HELLO', {
+                size : 100000, 
+                height : 100000, 
+                //curveSegments: 6,
+                font : font, 
+                //style: "normal"
+            });
+
+            var color = new THREE.Color();
+            color.setRGB(255, 250, 250);
+            var textMaterial = new THREE.MeshBasicMaterial({color : 0x00ff00});
+            var text = new THREE.Mesh(textGeo, textMaterial);
+
+            text.position.x = parseFloat(parsed[i].First*60000+1000, 10);
+            text.position.y = parseFloat(parsed[i].Second*60000+1000, 10);
+            text.position.z = parseFloat(parsed[i].Third*60000+1000, 10);
+            scene.add(text);
+
+        }
+        */
+    //});
+
+
+        /*	If my calculations are correct, when this baby hits 88 miles per hour...
+	you're gonna see some serious shit.	*/
+
+        renderer = new THREE.WebGLRenderer(); /*	Rendererererers particles.	*/
+        renderer.setPixelRatio(window.devicePixelRatio); /*	Probably 1; unless you're fancy.	*/
+        renderer.setSize(WIDTH, HEIGHT); /*	Full screen baby Wooooo!	*/
+
+        container.appendChild(renderer.domElement); /* Let's add all this crazy junk to the page.	*/
+
+        /*	I don't know about you, but I like to know how bad my
+		code is wrecking the performance of a user's machine.
+		Let's see some damn stats!	*/
+
+
+        /* Event Listeners */
+
+        window.addEventListener('resize', onWindowResize, false);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        document.addEventListener('touchstart', onDocumentTouchStart, false);
+        document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        render();
+    }
+
+    function render() {
+        var time = Date.now() * 0.00005;
+
+        camera.position.x += (mouseX - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY - camera.position.y) * 0.05;
+
+        camera.lookAt(scene.position);
+
+        for (i = 0; i < scene.children.length; i++) {
+
+            var object = scene.children[i];
+
+            if (object instanceof THREE.PointCloud) {
+
+                object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+            }
+        }
+
+        for (i = 0; i < materials.length; i++) {
+
+            color = parameters[i][0];
+
+            h = (360 * (color[0] + time) % 360) / 360;
+            materials[i].color.setHSL(h, color[1], color[2]);
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    function onDocumentMouseMove(e) {
+        mouseX = e.clientX - windowHalfX;
+        mouseY = e.clientY - windowHalfY;
+    }
+
+    /*	Mobile users?  I got your back homey	*/
+
+    function onDocumentTouchStart(e) {
+
+        if (e.touches.length === 1) {
+
+            e.preventDefault();
+            mouseX = e.touches[0].pageX - windowHalfX;
+            mouseY = e.touches[0].pageY - windowHalfY;
+        }
+    }
+
+    function onDocumentTouchMove(e) {
+
+        if (e.touches.length === 1) {
+
+            e.preventDefault();
+            mouseX = e.touches[0].pageX - windowHalfX;
+            mouseY = e.touches[0].pageY - windowHalfY;
+        }
+    }
+
+    function onWindowResize() {
+
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+		</script>
+	</body>
+</html>
