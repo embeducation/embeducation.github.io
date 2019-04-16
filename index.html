@@ -27,6 +27,8 @@
 		<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.5/dat.gui.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.18/chance.min.js"></script>
+		<script src="util.js"></script>
+		<script src="home.js"></script>
 
 
 </head>
@@ -43,7 +45,21 @@ style="
 <img class="logo" src="logo.png">
 </h1>
 
-<script src="home.js"></script>
+<div class="viz-container">
+	<div id="viz" class="item1"></div>
+	<div id="addtext" class="item2"> 
+		<!-- Add text button -->
+		<button id="add_text" onclick=""> 
+          <i id="add_text_icon" class="fa fa-plus"></i>
+          Add Text
+		</button>
+		<br><br>
+
+		<!-- Add text textbox -->
+		<textarea rows="10" cols="30"></textarea>
+
+	</div>
+</div>
 
 	<!-- Section for adding the embedding visualization -->
 	<a
@@ -73,13 +89,6 @@ style="
 			>THREE.TextSprite</div>
 		</a>
 
-<br><br>
-
-<!-- Add text button -->
-<button id="add_text" onclick=""> 
-          <i id="add_text_icon" class="fa fa-plus"></i>
-          Add Text
-</button>
 <br><br>
 
 

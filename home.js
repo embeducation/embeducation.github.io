@@ -1,4 +1,4 @@
-(function() {
+function showVizualization() {
 
 	var getRandomColor = function() {
 		return chance.color({format: 'hex'});
@@ -94,7 +94,8 @@
 	var renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setPixelRatio(devicePixelRatio);
 	renderer.setClearColor(0x000000);
-	document.body.appendChild(renderer.domElement);
+	vizTag = document.getElementById("viz")
+	vizTag.appendChild(renderer.domElement);
 	var scene = new THREE.Scene();
 	var camera = new THREE.PerspectiveCamera(45, 1, 1, Math.pow(2, 17));
 	camera.position.set(0, 0, Math.pow(2, 14));
@@ -127,17 +128,6 @@
 						.setY(y)
 						.setZ(z)
 						.setLength(chance.floating({min: Math.pow(2, 11), max: Math.pow(2, 13)}));
-				
-				
-				/*
-				var a = Math.acos(2 * chance.random() - 1) - Math.PI / 2;
-				var b = 2 * chance.random() * Math.PI;
-				sprite.position
-					.setX(Math.cos(a) * Math.cos(b))
-					.setY(Math.cos(a) * Math.sin(b))
-					.setZ(Math.sin(a))
-					.setLength(chance.floating({min: Math.pow(2, 11), max: Math.pow(2, 13)}));
-				*/
 				
 			})();
 			scene.add(sprite);
@@ -209,7 +199,7 @@
 		guiFolder.open();
 	})();
 
-})();
+}
 
 
 Util.events(document, {
@@ -218,6 +208,7 @@ Util.events(document, {
 
 	"DOMContentLoaded": function(e) {
 		// want to load sections and classes list
+		showVizualization();
 		}
 
 });
