@@ -91,9 +91,9 @@ function showVizualization() {
 
 	console.log("RANDOM TEXT");
 	console.log(getRandomText);
-	var renderer = new THREE.WebGLRenderer({antialias: true});
+	var renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 	renderer.setPixelRatio(devicePixelRatio);
-	renderer.setClearColor(0x000000);
+	renderer.setClearColor( 0xffffff, 0 );
 	vizTag = document.getElementById("viz")
 	vizTag.appendChild(renderer.domElement);
 	var scene = new THREE.Scene();
@@ -157,47 +157,49 @@ function showVizualization() {
 		};
 		run();
 	})();
-	var gui = new dat.GUI();
-	(function() {
-		var guiFolder = gui.addFolder('texture');
-		guiFolder.add({
-			text: function() {
-				sprites.forEach(function(sprite) {
-					sprite.material.map.text = getRandomText();
-				});
-			},
-		}, 'text');
-		guiFolder.add({
-			fontFamily: function() {
-				sprites.forEach(function(sprite) {
-					sprite.material.map.fontFamily = getRandomFontFamily();
-				});
-			},
-		}, 'fontFamily');
-		guiFolder.open();
-	})();
-	(function() {
-		var guiFolder = gui.addFolder('sprite');
-		guiFolder.add({
-			textSize: function() {
-				sprites.forEach(function(sprite) {
-					sprite.textSize = getRandomTextSize();
-				});
-			},
-		}, 'textSize');
-		guiFolder.add(Object.defineProperty({}, 'redrawInterval', {
-			get: function() {
-				return redrawInterval;
-			},
-			set: function(value) {
-				redrawInterval = value;
-				sprites.forEach(function(sprite) {
-					sprite.redrawInterval = redrawInterval;
-				});
-			},
-		}), 'redrawInterval', 0, 2000, 1);
-		guiFolder.open();
-	})();
+
+	// Uncomment for control box on top right:
+	// var gui = new dat.GUI();
+	// (function() {
+	// 	var guiFolder = gui.addFolder('texture');
+	// 	guiFolder.add({
+	// 		text: function() {
+	// 			sprites.forEach(function(sprite) {
+	// 				sprite.material.map.text = getRandomText();
+	// 			});
+	// 		},
+	// 	}, 'text');
+	// 	guiFolder.add({
+	// 		fontFamily: function() {
+	// 			sprites.forEach(function(sprite) {
+	// 				sprite.material.map.fontFamily = getRandomFontFamily();
+	// 			});
+	// 		},
+	// 	}, 'fontFamily');
+	// 	guiFolder.open();
+	// })();
+	// (function() {
+	// 	var guiFolder = gui.addFolder('sprite');
+	// 	guiFolder.add({
+	// 		textSize: function() {
+	// 			sprites.forEach(function(sprite) {
+	// 				sprite.textSize = getRandomTextSize();
+	// 			});
+	// 		},
+	// 	}, 'textSize');
+	// 	guiFolder.add(Object.defineProperty({}, 'redrawInterval', {
+	// 		get: function() {
+	// 			return redrawInterval;
+	// 		},
+	// 		set: function(value) {
+	// 			redrawInterval = value;
+	// 			sprites.forEach(function(sprite) {
+	// 				sprite.redrawInterval = redrawInterval;
+	// 			});
+	// 		},
+	// 	}), 'redrawInterval', 0, 2000, 1);
+	// 	guiFolder.open();
+	// })();
 
 }
 
