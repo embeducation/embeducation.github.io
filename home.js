@@ -6,6 +6,22 @@ var dictY = {'the': 0.000596, 'a': -0.0058457, 'and': -0.001062689, 'to': -0.005
 
 var dictZ = {'the': 0.00416, 'a': -0.003541731, 'and': 0.00210964, 'to': -0.000193004, 'he': -0.000881531, 'was': -0.001949914, 'of': -0.002944002, 'his': -0.003697472, 'in': -0.005251133, 'He': -0.002049407, 'that': 0.002573964, '--': 0.004325169, 'on': 0.001471328, 'as': 0.003965077, 'had': 0.000212429, 'Dursley': 0.002545179, 'it': -0.004619717, 'have': -0.000262265, 'at': 0.001549398, 'Mr.': 0.000829124, 'I': -0.001765788, 'be': 0.001634682, 'said': 0.004967472, 'Professor': -0.003828306, 'all': 0.001316748, 'were': -0.005880527, 'Mrs.': -0.001838716, 'you': -0.002584983, "didn't": 0.001770102, 'but': -0.006609503, 'out': 0.002520792, 'It': -0.001747678, 'been': -0.001361016, 'she': 0.003158704, 'for': 0.002946087, 'her': 0.002156832, 'they': 0.002253093, 'Dumbledore': 0.001587571, 'very': 0.002150701, 'people': -0.003851277, 'over': 0.001010274, 'into': -0.004086439, 'cat': 0.002005473, 'McGonagall': 0.000332299, 'not': -0.003457683, 'Harry': -0.003034856, 'with': 0.003838228, 'The': 0.001014332, 'up': 0.002461607, 'back': -0.000885978, 'him': 0.001646949, 'if': 0.002188061, 'this': 0.002960937, 'so': -0.002566123, 'it.': -0.002482304, 'about': 0.003230376, "couldn't": 0.001003007, 'down': -0.003231551, 'their': -0.00198318, 'would': 0.000399691, 'could': 0.00851905, 'what': -0.00288925, 'never': -0.000526784, 'even': 0.001050038, 'them': -0.001864439}
 
+function getPositionX(word){
+	return dictX[word];
+}
+
+function getPositionY(word){
+	return dictY[word];
+}
+
+function getPositionZ(word){
+	return dictZ[word];
+}
+
+function getWord(index){
+	return words[index];
+}
+
 function showVizualization() {
 
 	var getRandomColor = function() {
@@ -33,22 +49,6 @@ function showVizualization() {
 
 	function getRandomInt(max) {
 	  return Math.floor(Math.random() * Math.floor(max));
-	}
-
-	function getPositionX(word){
-		return dictX[word];
-	}
-
-	function getPositionY(word){
-		return dictY[word];
-	}
-
-	function getPositionZ(word){
-		return dictZ[word];
-	}
-
-	function getWord(index){
-		return words[index];
 	}
 
 
@@ -205,6 +205,7 @@ function showVizualization() {
 
 function find_nn(word, number) {
 	console.log("Find", number, "nearest neighbors for", word);
+	console.log("Coordinates are", getPositionZ(word))
 }
 
 function find_path(from_word, to_word) {
