@@ -203,6 +203,13 @@ function showVizualization() {
 
 }
 
+function find_nn(word, number) {
+	console.log("Find", number, "nearest neighbors for", word);
+}
+
+function find_path(from_word, to_word) {
+	console.log("Find path from ", from_word, "to", to_word);
+}
 
 Util.events(document, {
 	// Final initalization entry point: the Javascript code inside this block
