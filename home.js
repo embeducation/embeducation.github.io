@@ -141,7 +141,7 @@ function showVizualization() {
 	controls.zoomSpeed = 1;
 	controls.keyPanSpeed = 1/2;
 	var renderScene = function() {
-		renderer.setSize(document.body.offsetWidth/2, document.body.offsetHeight/2);
+		renderer.setSize(document.body.offsetWidth/1.5, document.body.offsetHeight/1.5);
 		camera.aspect = renderer.domElement.width / renderer.domElement.height;
 		camera.updateProjectionMatrix();
 		controls.update();
@@ -200,6 +200,74 @@ function showVizualization() {
 	})();
 
 }
+
+function getTextInput(){
+	text = document.getElementById("textinput").value;
+	if(text == ""){
+		return null;
+	}
+    text_no_punc = text.match(/[^_\W]+/g).join(' ');
+	words_array = text_no_punc.split(" ");
+	return words_array;
+
+}
+
+function getEmbeddings(){
+	words_array = getTextInput();
+	if(words_array == null){
+		return 
+	}
+	final_embeddings = null;
+	pca_embeddings = null;
+
+	var opt = {}
+	opt.dim = 3; // dimensionality of the embedding (2 = default)
+	opt.epsilon = 10; // epsilon is learning rate (10 = default)
+	opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
+	var tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+
+	// Load the model.
+	use.load().then(model => {
+	  // Embed an array of sentences.
+	  const words = words_array;
+	  model.embed(words).then(embeddings => {
+	    // `embeddings` is a 2D tensor consisting of the 512-dimensional embeddings for each sentence.
+	    // So in this example `embeddings` has the shape [2, 512].
+	    embeddings.print(/* verbose */);
+
+		// flatten array
+		let arr = embeddings.dataSync()
+
+		//convert to multiple dimensional array
+		shape = embeddings.shape
+		shape.reverse().map(a => {
+		  arr = arr.reduce((b, c) => {
+		  latest = b[b.length - 1]
+		  latest.length < a ? latest.push(c) : b.push([c])
+		  return b
+		}, [[]])
+		})
+	   
+
+	    tsne.initDataRaw(arr[0]);
+	    for(var k = 0; k < 500; k++) {
+		  tsne.step(); // every time you call this, solution gets better
+		}
+		pca_embeddings = tsne.getSolution(); // Y is an array of 3-D points that you can plot
+	  
+	  });
+	});
+
+	// Remove old visualization if it exists
+	vizTag = document.getElementById("viz")
+	if (vizTag.hasChildNodes()) {
+		vizTag.removeChild(vizTag.childNodes[0]);  
+	}
+
+	// showVizualization(words_array, pca_embeddings)
+
+}
+	
 
 
 Util.events(document, {
