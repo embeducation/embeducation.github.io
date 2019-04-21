@@ -5,7 +5,8 @@ body {
   font: 16px/1 'Do Hyeon', sans-serif;
   /*background:transparent;*/
   background-color: #FFFAF0;
-  overflow-y:hidden;
+  /*TODO: scrolling doesn't work*/
+  overflow-y: scroll !important;
   overflow-x: hidden;
   color: black;
 }
