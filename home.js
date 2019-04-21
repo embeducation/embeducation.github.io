@@ -329,7 +329,7 @@ function findDistance(word1, word2) {
 	var dist_result;
 
 	// Check words exists in embeddings
-	if (!words.includes(word1) || !words.includes(word2)) {
+	if (!current_words.includes(word1) || !current_words.includes(word2)) {
 		dist_result = word1 + " and/or " + word2 + " do not exist in the graph. Please try another word."
 	} else {
 		dist = getEuclideanDistance(word1, word2);
@@ -344,14 +344,14 @@ function findNN(word, number) {
 	var neighbors_result;
 
 	// Check word exists in embeddings
-	if (!words.includes(word)) {
+	if (!current_words.includes(word)) {
 		neighbors_result = word + " does not exist in the graph. Please try another word."
 	} else {
 		// Get distances from 'word' to every other word (neighbor) in 'words' list
 		var distances = {};
-		for (var i = 0; i < words.length; i++) {
-			if (words[i] != word && words[i] != "") {  // disregard 'word' itself and '' (empty string)
-				distances[words[i]] = getEuclideanDistance(word, words[i]);
+		for (var i = 0; i < current_words.length; i++) {
+			if (current_words[i] != word && current_words[i] != "") {  // disregard 'word' itself and '' (empty string)
+				distances[current_words[i]] = getEuclideanDistance(word, current_words[i]);
 			}
 		}
 
