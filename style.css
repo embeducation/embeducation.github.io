@@ -51,12 +51,14 @@ h1 {
 button {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  background-color: #4CAF50;
-  color: white;
+   background-color: lightgray; /* Green */
+  color: black;
+
+
 }
 
 button:hover {
-  background-color: lightgray; /* Green */
-  color: black;
+  background-color: #4CAF50;
+  color: white;
 }
 
