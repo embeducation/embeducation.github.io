@@ -84,7 +84,7 @@ Find <select id="nn_number" class="roundcorners">
 
 <input type="text" name="nearest_neighbor" id="nn_word" size="25" class="roundcorners">
 
-<button id="find_nn" onclick="findNN(document.getElementById('nn_word').value, document.getElementById('nn_number').value)">
+<button id="find_nn" onclick="findNN(document.getElementById('nn_word').value.toLowerCase(), document.getElementById('nn_number').value)">
           Go
 </button>
 
@@ -99,7 +99,7 @@ Find <select id="nn_number" class="roundcorners">
 
 Find path from <input type="text" name="path" id="path_from" size="25" class="roundcorners"> to <input type="text" name="path" id="path_to" size="25" class="roundcorners">
 
-<button id="find_path" onclick="findPath(document.getElementById('path_from').value, document.getElementById('path_to').value)">
+<button id="find_path" onclick="findPath(document.getElementById('path_from').value.toLowerCase(), document.getElementById('path_to').value.toLowerCase())">
           Go
 </button>
 
@@ -114,7 +114,7 @@ Find path from <input type="text" name="path" id="path_from" size="25" class="ro
 
 Find distance between <input type="text" name="distance" id="dist_from" size="25" class="roundcorners"> and <input type="text" name="distance" id="dist_to" size="25" class="roundcorners">
 
-<button id="find_dist" onclick="findDistance(document.getElementById('dist_from').value, document.getElementById('dist_to').value)">
+<button id="find_dist" onclick="findDistance(document.getElementById('dist_from').value.toLowerCase(), document.getElementById('dist_to').value.toLowerCase())">
           Go
 </button>
 

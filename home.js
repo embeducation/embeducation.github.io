@@ -220,6 +220,7 @@ function showVizualization(words = words_HP, dictX = dictX_HP, dictY = dictY_HP,
 
 function getTextInput(){
 	text = document.getElementById("textinput").value;
+	text = text.toLowerCase();
 	if(text == ""){
 		return null;
 	}
