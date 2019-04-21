@@ -5,10 +5,10 @@
 body {
   font: 16px/1 'Do Hyeon', sans-serif;
   /*background:transparent;*/
-  background-color: black;
+  background-color: #FFFAF0;
   overflow-y:hidden;
   overflow-x: hidden;
-  color: lightgray;
+  color: black;
 }
 
 h1 {
@@ -20,7 +20,7 @@ h1 {
   margin-left: 5%;
   margin-top: 0px;
   padding-top: 4px;
-  color: white;
+  color: black;
 }
 
 .logo{
@@ -31,6 +31,7 @@ h1 {
 
 .viz-container{
   display: grid;
+  grid-template-columns: 70% 30%;
 }
 
 .item1{
@@ -44,21 +45,22 @@ h1 {
   grid-column-end: 2;
 }
 
-.grayback{
+/*.grayback{
   background-color: lightgray;
-}
+}*/
 
 button {
+  border-radius: 5px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-   background-color: lightgray; /* Green */
+   background-color: #F5DEB3; /* Green */
   color: black;
 
 
 }
 
 button:hover {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #FF8C00;
+  color: black;
 }
 
