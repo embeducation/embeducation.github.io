@@ -294,17 +294,30 @@ function findNN(word, number) {
 	});
 	neighbors.reverse(); // sorted from least to most distance from 'word'
 
-	// Log 'number'-nearest neighbors
+	// Display 'number'-nearest neighbors
+	if (number == 1) {
+		var neighbors_result = "The " + number + " nearest neighbor to " + word  + " is: "
+	} else {
+		var neighbors_result = "The " + number + " nearest neighbors to " + word  + " are: "
+	}
 	for (var i = 0; i < number; i++) {
 		if (i == neighbors.length) { break; }
 		console.log("Neighbor", i + 1, "is", neighbors[i][0]);
+		if (i == number - 1) {
+			neighbors_result += neighbors[i][0] + ".";
+			break;
+		}
+		neighbors_result += neighbors[i][0] + ", ";
 	}
+	document.getElementById("neighbors_result").innerHTML = neighbors_result;
+	document.getElementById("find_nn_result").style.display = "inline";
 }
 
 function findPath(from_word, to_word) {
 	// Initialize path
 	var path = [];
 	path.push(from_word);
+	var path_result = "The path from " + from_word + " to " + to_word + " is: "
 	while (from_word != to_word) {
 		var from_to_distance = getEuclideanDistance(from_word, to_word);
 		// get all distances from all points to to_word
@@ -361,8 +374,19 @@ function findPath(from_word, to_word) {
 		from_word = neighbors_from[0][0];
 		path.push(from_word);
 	}
-	
+
 	console.log(path);
+
+	for (var i = 0; i < path.length; i++) {
+		if (i == path.length - 1) {
+			path_result += path[i];
+			break;
+		}
+		path_result += path[i] + " ----> "
+	}
+
+	document.getElementById("path_result").innerHTML = path_result;
+	document.getElementById("find_path_result").style.display = "inline";
 }
 
 Util.events(document, {
@@ -372,6 +396,10 @@ Util.events(document, {
 	"DOMContentLoaded": function(e) {
 		// want to load sections and classes list
 		showVizualization();
-		}
+
+		// hide the nearest neighbor and path results sections on loading
+		document.getElementById("find_nn_result").style.display = "none";
+		document.getElementById("find_path_result").style.display = "none";
+	}
 
 });
