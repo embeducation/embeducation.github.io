@@ -272,7 +272,6 @@ function getEmbeddings(){
 		  tsne.step(); // every time you call this, solution gets better
 		}
 		pca_embeddings = tsne.getSolution(); // Y is an array of 3-D points that you can plot
-		
 	  
 
 		/*
@@ -322,8 +321,23 @@ function getEmbeddings(){
 }
 
 function getEuclideanDistance(word1, word2) {
-	var sum = Math.pow(getPositionX(word1) - getPositionX(word2), 2) + Math.pow(getPositionY(word1) - getPositionY(word2), 2) + Math.pow(getPositionZ(word1) - getPositionZ(word2), 2)
+	var sum = Math.pow(getPositionX(word1) - getPositionX(word2), 2) + Math.pow(getPositionY(word1) - getPositionY(word2), 2) + Math.pow(getPositionZ(word1) - getPositionZ(word2), 2);
 	return Math.sqrt(sum)
+}
+
+function findDistance(word1, word2) {
+	var dist_result;
+
+	// Check words exists in embeddings
+	if (!words.includes(word1) || !words.includes(word2)) {
+		dist_result = word1 + " and/or " + word2 + " do not exist in the graph. Please try another word."
+	} else {
+		dist = getEuclideanDistance(word1, word2);
+		dist_result = "The distance between " + word1 + " and " + word2 + " is: " + dist + "."
+	}
+
+	document.getElementById("dist_result").innerHTML = dist_result;
+	document.getElementById("find_dist_result").style.display = "inline";
 }
 
 function findNN(word, number) {
@@ -467,6 +481,7 @@ Util.events(document, {
 		// hide the nearest neighbor and path results sections on loading
 		document.getElementById("find_nn_result").style.display = "none";
 		document.getElementById("find_path_result").style.display = "none";
+		document.getElementById("find_dist_result").style.display = "none";
 	}
 
 });
