@@ -272,6 +272,7 @@ function getEmbeddings(){
 		  tsne.step(); // every time you call this, solution gets better
 		}
 		pca_embeddings = tsne.getSolution(); // Y is an array of 3-D points that you can plot
+		
 	  
 
 		/*
@@ -326,92 +327,133 @@ function getEuclideanDistance(word1, word2) {
 }
 
 function findNN(word, number) {
-	// Get distances from 'word' to every other word (neighbor) in 'words' list
-	var distances = {};
-	for (var i = 0; i < words.length; i++) {
-		if (words[i] != word && words[i] != "") {  // disregard 'word' itself and '' (empty string)
-			distances[words[i]] = getEuclideanDistance(word, words[i]);
+	var neighbors_result;
+
+	// Check word exists in embeddings
+	if (!words.includes(word)) {
+		neighbors_result = word + " does not exist in the graph. Please try another word."
+	} else {
+		// Get distances from 'word' to every other word (neighbor) in 'words' list
+		var distances = {};
+		for (var i = 0; i < words.length; i++) {
+			if (words[i] != word && words[i] != "") {  // disregard 'word' itself and '' (empty string)
+				distances[words[i]] = getEuclideanDistance(word, words[i]);
+			}
+		}
+
+		// Sort neighbors by distance from 'word'
+		var neighbors = Object.keys(distances).map(function(key) {
+		  return [key, distances[key]];
+		});
+		neighbors.sort(function(first, second) {
+		  return second[1] - first[1];
+		});
+		neighbors.reverse(); // sorted from least to most distance from 'word'
+
+		// Display 'number'-nearest neighbors
+		if (number == 1) {
+			neighbors_result = "The " + number + " nearest neighbor to " + word  + " is: "
+		} else {
+			neighbors_result = "The " + number + " nearest neighbors to " + word  + " are: "
+		}
+		for (var i = 0; i < number; i++) {
+			if (i == neighbors.length) { break; }
+			console.log("Neighbor", i + 1, "is", neighbors[i][0]);
+			if (i == number - 1) {
+				neighbors_result += neighbors[i][0] + ".";
+				break;
+			}
+			neighbors_result += neighbors[i][0] + ", ";
 		}
 	}
-
-	// Sort neighbors by distance from 'word'
-	var neighbors = Object.keys(distances).map(function(key) {
-	  return [key, distances[key]];
-	});
-	neighbors.sort(function(first, second) {
-	  return second[1] - first[1];
-	});
-	neighbors.reverse(); // sorted from least to most distance from 'word'
-
-	// Log 'number'-nearest neighbors
-	for (var i = 0; i < number; i++) {
-		if (i == neighbors.length) { break; }
-		console.log("Neighbor", i + 1, "is", neighbors[i][0]);
-	}
+	
+	document.getElementById("neighbors_result").innerHTML = neighbors_result;
+	document.getElementById("find_nn_result").style.display = "inline";
 }
 
 function findPath(from_word, to_word) {
-	// Initialize path
-	var path = [];
-	path.push(from_word);
-	while (from_word != to_word) {
-		var from_to_distance = getEuclideanDistance(from_word, to_word);
-		// get all distances from all points to to_word
-		var distances_to = {}
-		for (var i = 0; i < current_words.length; i++) {
-			if (current_words[i] != from_word && current_words[i] != to_word && current_words[i] != "") {  // disregard 'from_word', 'to_word', and '' (empty string)
-				distances_to[current_words[i]] = getEuclideanDistance(to_word, current_words[i]);
-			}
-		}
-		if (distances_to.length == 0) { break; }
 
-		// Sort neighbors by distance from 'to_word'
-		var neighbors_to = Object.keys(distances_to).map(function(key) {
-		  return [key, distances_to[key]];
-		});
-		neighbors_to.sort(function(first, second) {
-		  return second[1] - first[1];
-		});
-		neighbors_to.reverse(); // sorted from least to most distance from 'to_word'
+	var path_result;
 
-		// throw out values greater than from_to_distance
-		var filtered = []
-		for (var i = 0; i < neighbors_to.length; i++) {
-			if (neighbors_to[i][1] <= from_to_distance) {
-				filtered.push(neighbors_to[i])
-			}
-		}
-		if (filtered.length == 0) {  // no closer points, so terminate
-			if (path[-1] != to_word) {
-				path.push(to_word);
-			}
-			break;
-		}
-
-		// from filtered neighbors, pick the one closest to from_word, and set it as new from_word
-		// get all distances from filtered points to from_word
-		var distances_from = {}
-		for (var i = 0; i < filtered.length; i++) {
-			distances_from[filtered[i][0]] = getEuclideanDistance(from_word, filtered[i][0]);
-		}
-
-		if (distances_from.length == 0) { break; }
-
-		// Sort neighbors by distance from 'from_word'
-		var neighbors_from = Object.keys(distances_from).map(function(key) {
-		  return [key, distances_from[key]];
-		});
-		neighbors_from.sort(function(first, second) {
-		  return second[1] - first[1];
-		});
-		neighbors_from.reverse(); // sorted from least to most distance from 'from_word'
-
-		// update from_word, and push to path
-		from_word = neighbors_from[0][0];
+	// Check words exists in embeddings
+	if (!words.includes(from_word) || !words.includes(to_word)) {
+		path_result = from_word + " and/or " + to_word + " do not exist in the graph. Please try another word."
+	} else {
+		// Initialize path
+		var path = [];
 		path.push(from_word);
+		path_result = "The path from " + from_word + " to " + to_word + " is: "
+		while (from_word != to_word) {
+			var from_to_distance = getEuclideanDistance(from_word, to_word);
+			// get all distances from all points to to_word
+			var distances_to = {}
+			for (var i = 0; i < words.length; i++) {
+				if (words[i] != from_word && words[i] != to_word && words[i] != "") {  // disregard 'from_word', 'to_word', and '' (empty string)
+					distances_to[words[i]] = getEuclideanDistance(to_word, words[i]);
+				}
+			}
+			if (distances_to.length == 0) { break; }
+
+			// Sort neighbors by distance from 'to_word'
+			var neighbors_to = Object.keys(distances_to).map(function(key) {
+			  return [key, distances_to[key]];
+			});
+			neighbors_to.sort(function(first, second) {
+			  return second[1] - first[1];
+			});
+			neighbors_to.reverse(); // sorted from least to most distance from 'to_word'
+
+			// throw out values greater than from_to_distance
+			var filtered = []
+			for (var i = 0; i < neighbors_to.length; i++) {
+				if (neighbors_to[i][1] <= from_to_distance) {
+					filtered.push(neighbors_to[i])
+				}
+			}
+			if (filtered.length == 0) {  // no closer points, so terminate
+				if (path[-1] != to_word) {
+					path.push(to_word);
+				}
+				break;
+			}
+
+			// from filtered neighbors, pick the one closest to from_word, and set it as new from_word
+			// get all distances from filtered points to from_word
+			var distances_from = {}
+			for (var i = 0; i < filtered.length; i++) {
+				distances_from[filtered[i][0]] = getEuclideanDistance(from_word, filtered[i][0]);
+			}
+
+			if (distances_from.length == 0) { break; }
+
+			// Sort neighbors by distance from 'from_word'
+			var neighbors_from = Object.keys(distances_from).map(function(key) {
+			  return [key, distances_from[key]];
+			});
+			neighbors_from.sort(function(first, second) {
+			  return second[1] - first[1];
+			});
+			neighbors_from.reverse(); // sorted from least to most distance from 'from_word'
+
+			// update from_word, and push to path
+			from_word = neighbors_from[0][0];
+			path.push(from_word);
+		}
+
+		console.log(path);
+
+		for (var i = 0; i < path.length; i++) {
+			if (i == path.length - 1) {
+				path_result += path[i];
+				break;
+			}
+			path_result += path[i] + " ----> "
+		}
 	}
+
 	
-	console.log(path);
+	document.getElementById("path_result").innerHTML = path_result;
+	document.getElementById("find_path_result").style.display = "inline";
 }
 
 Util.events(document, {
@@ -421,6 +463,10 @@ Util.events(document, {
 	"DOMContentLoaded": function(e) {
 		// want to load sections and classes list
 		showVizualization();
-		}
+
+		// hide the nearest neighbor and path results sections on loading
+		document.getElementById("find_nn_result").style.display = "none";
+		document.getElementById("find_path_result").style.display = "none";
+	}
 
 });

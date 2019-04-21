@@ -1,12 +1,12 @@
 /*Home stylesheet */
 @import url('https://fonts.googleapis.com/css?family=Do+Hyeon');
-@import url('https://fonts.googleapis.com/css?family=Advent+Pro');
 
 body {
   font: 16px/1 'Do Hyeon', sans-serif;
   /*background:transparent;*/
   background-color: #FFFAF0;
-  overflow-y:hidden;
+  /*TODO: scrolling doesn't work*/
+  overflow-y: scroll !important;
   overflow-x: hidden;
   color: black;
 }
@@ -17,7 +17,7 @@ h1 {
   text-align: left;
   font: 37px/1 'Do Hyeon', sans-serif;
   margin-bottom: 7px;
-  margin-left: 5%;
+  margin-left: 10%;
   margin-top: 0px;
   padding-top: 4px;
   color: black;
@@ -31,7 +31,7 @@ h1 {
 
 .viz-container{
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 68% 32%;
 }
 
 .item1{
@@ -53,7 +53,7 @@ button {
   border-radius: 5px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-   background-color: #F5DEB3; /* Green */
+  background-color: #F5DEB3; /* Green */
   color: black;
 
 
