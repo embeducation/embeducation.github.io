@@ -271,12 +271,12 @@ function getEmbeddings(){
 
 }
 
-function find_nn(word, number) {
+function findNN(word, number) {
 	console.log("Find", number, "nearest neighbors for", word);
 	console.log("Coordinates are", getPositionZ(word))
 }
 
-function find_path(from_word, to_word) {
+function findPath(from_word, to_word) {
 	console.log("Find path from ", from_word, "to", to_word);
 }
 
