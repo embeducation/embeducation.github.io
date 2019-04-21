@@ -271,9 +271,34 @@ function getEmbeddings(){
 
 }
 
+function getEuclideanDistance(word1, word2) {
+	var sum = Math.pow(getPositionX(word1) - getPositionX(word2), 2) + Math.pow(getPositionY(word1) - getPositionY(word2), 2) + Math.pow(getPositionZ(word1) - getPositionZ(word2), 2)
+	return Math.sqrt(sum)
+}
+
 function findNN(word, number) {
-	console.log("Find", number, "nearest neighbors for", word);
-	console.log("Coordinates are", getPositionZ(word))
+	// Get distances from 'word' to every other word (neighbor) in 'words' list
+	var distances = {};
+	for (var i = 0; i < words.length; i++) {
+		if (words[i] != word && words[i] != "") {  // disregard 'word' itself and '' (empty string)
+			distances[words[i]] = getEuclideanDistance(word, words[i]);
+		}
+	}
+
+	// Sort neighbors by distance from 'word'
+	var neighbors = Object.keys(distances).map(function(key) {
+	  return [key, distances[key]];
+	});
+	neighbors.sort(function(first, second) {
+	  return second[1] - first[1];
+	});
+	neighbors.reverse() // sorted from least to most distance from 'word'
+
+	// Log 'number'-nearest neighbors
+	for (var i = 0; i < number; i++) {
+		if (i == neighbors.length) { break; }
+		console.log("Neighbor", i + 1, "is", neighbors[i][0]);
+	}
 }
 
 function findPath(from_word, to_word) {
