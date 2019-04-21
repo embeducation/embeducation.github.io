@@ -390,7 +390,7 @@ function findPath(from_word, to_word) {
 	var path_result;
 
 	// Check words exists in embeddings
-	if (!words.includes(from_word) || !words.includes(to_word)) {
+	if (!current_words.includes(from_word) || !current_words.includes(to_word)) {
 		path_result = from_word + " and/or " + to_word + " do not exist in the graph. Please try another word."
 	} else {
 		// Initialize path
@@ -401,9 +401,9 @@ function findPath(from_word, to_word) {
 			var from_to_distance = getEuclideanDistance(from_word, to_word);
 			// get all distances from all points to to_word
 			var distances_to = {}
-			for (var i = 0; i < words.length; i++) {
-				if (words[i] != from_word && words[i] != to_word && words[i] != "") {  // disregard 'from_word', 'to_word', and '' (empty string)
-					distances_to[words[i]] = getEuclideanDistance(to_word, words[i]);
+			for (var i = 0; i < current_words.length; i++) {
+				if (current_words[i] != from_word && current_words[i] != to_word && current_words[i] != "") {  // disregard 'from_word', 'to_word', and '' (empty string)
+					distances_to[current_words[i]] = getEuclideanDistance(to_word, current_words[i]);
 				}
 			}
 			if (distances_to.length == 0) { break; }
