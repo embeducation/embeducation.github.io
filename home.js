@@ -292,7 +292,7 @@ function findNN(word, number) {
 	neighbors.sort(function(first, second) {
 	  return second[1] - first[1];
 	});
-	neighbors.reverse() // sorted from least to most distance from 'word'
+	neighbors.reverse(); // sorted from least to most distance from 'word'
 
 	// Log 'number'-nearest neighbors
 	for (var i = 0; i < number; i++) {
@@ -302,7 +302,67 @@ function findNN(word, number) {
 }
 
 function findPath(from_word, to_word) {
-	console.log("Find path from ", from_word, "to", to_word);
+	// Initialize path
+	var path = [];
+	path.push(from_word);
+	while (from_word != to_word) {
+		var from_to_distance = getEuclideanDistance(from_word, to_word);
+		// get all distances from all points to to_word
+		var distances_to = {}
+		for (var i = 0; i < words.length; i++) {
+			if (words[i] != from_word && words[i] != to_word && words[i] != "") {  // disregard 'from_word', 'to_word', and '' (empty string)
+				distances_to[words[i]] = getEuclideanDistance(to_word, words[i]);
+			}
+		}
+		if (distances_to.length == 0) { break; }
+
+		// Sort neighbors by distance from 'to_word'
+		var neighbors_to = Object.keys(distances_to).map(function(key) {
+		  return [key, distances_to[key]];
+		});
+		neighbors_to.sort(function(first, second) {
+		  return second[1] - first[1];
+		});
+		neighbors_to.reverse(); // sorted from least to most distance from 'to_word'
+
+		// throw out values greater than from_to_distance
+		var filtered = []
+		for (var i = 0; i < neighbors_to.length; i++) {
+			if (neighbors_to[i][1] <= from_to_distance) {
+				filtered.push(neighbors_to[i])
+			}
+		}
+		if (filtered.length == 0) {  // no closer points, so terminate
+			if (path[-1] != to_word) {
+				path.push(to_word);
+			}
+			break;
+		}
+
+		// from filtered neighbors, pick the one closest to from_word, and set it as new from_word
+		// get all distances from filtered points to from_word
+		var distances_from = {}
+		for (var i = 0; i < filtered.length; i++) {
+			distances_from[filtered[i][0]] = getEuclideanDistance(from_word, filtered[i][0]);
+		}
+
+		if (distances_from.length == 0) { break; }
+
+		// Sort neighbors by distance from 'from_word'
+		var neighbors_from = Object.keys(distances_from).map(function(key) {
+		  return [key, distances_from[key]];
+		});
+		neighbors_from.sort(function(first, second) {
+		  return second[1] - first[1];
+		});
+		neighbors_from.reverse(); // sorted from least to most distance from 'from_word'
+
+		// update from_word, and push to path
+		from_word = neighbors_from[0][0];
+		path.push(from_word);
+	}
+	
+	console.log(path);
 }
 
 Util.events(document, {
