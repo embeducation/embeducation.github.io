@@ -20,9 +20,9 @@ words = ['harry', 'said', 'ron', 'hermione', 'professor', 'lupin', 'back', 'blac
 
 d_x = {}
 
-for i in range(1, len(words)):
+for i in range(len(words)):
 	x = labels_array[i].split(',')[0]
-	#print (x)
+	#print (x, words[i])
 	d_x[words[i]] = float(x)
 
 #print (d_x)
@@ -31,7 +31,7 @@ for i in range(1, len(words)):
 
 d_y = {}
 
-for i in range(1, len(words)):
+for i in range(len(words)):
 	y = labels_array[i].split(',')[1]
 	#print (x)
 	d_y[words[i]] = float(y)
@@ -40,7 +40,7 @@ for i in range(1, len(words)):
 
 d_z = {}
 
-for i in range(1, len(words)):
+for i in range(len(words)):
 	z = labels_array[i].split(',')[2]
 	#print (x)
 	d_z[words[i]] = float(z)
