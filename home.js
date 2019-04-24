@@ -344,6 +344,11 @@ function getEuclideanDistance(word1, word2) {
 	return Math.sqrt(sum)
 }
 
+function getEuclideanDistanceCoords(coords, word2) {
+	var sum = Math.pow(coords[0] - getPositionX(word2), 2) + Math.pow(coords[1] - getPositionY(word2), 2) + Math.pow(coords[2] - getPositionZ(word2), 2);
+	return Math.sqrt(sum)
+}
+
 function findDistance(word1, word2) {
 	var dist_result;
 
@@ -494,6 +499,45 @@ function findPath(from_word, to_word) {
 	// showVizualization(targetValues = path);
 }
 
+function findAnalogy(a1, a2, b1) {
+	analogy_result = ""
+
+	// Check word exists in embeddings
+	if (!current_words.includes(a1) || !current_words.includes(a2) || !current_words.includes(b1)) {
+		analogy_result = a1 + ", " + a2 + " and/or " + b1 + " do not exist in the graph. Please try another word."
+	} else {
+		// calculate vector between a1 and a2
+		var vector = [getPositionX(a2) - getPositionX(a1), getPositionY(a2) - getPositionY(a1), getPositionZ(a2) - getPositionZ(a1)]
+		// apply vector to b1, to get new_pt
+		var new_pt = [getPositionX(b1) + vector[0], getPositionY(b1) + vector[1], getPositionZ(b1) + vector[2]]
+
+		// find word in graph closest to new_pt (similar to NN procedure, but with arbitrary 3D point): b2
+		// Get distances from 'new_pt' to every other word (neighbor) in 'words' list
+		var distances = {};
+		for (var i = 0; i < current_words.length; i++) {
+			if (current_words[i] != "") {  // disregard 'word' itself and '' (empty string)
+				distances[current_words[i]] = getEuclideanDistanceCoords(new_pt, current_words[i]);
+			}
+		}
+
+		// Sort neighbors by distance from 'new_pt'
+		var neighbors = Object.keys(distances).map(function(key) {
+		  return [key, distances[key]];
+		});
+		neighbors.sort(function(first, second) {
+		  return second[1] - first[1];
+		});
+		neighbors.reverse(); // sorted from least to most distance from 'word'
+		var b2 = neighbors[0][0];
+		analogy_result = b2;
+	}
+
+	document.getElementById("analogy_result").innerHTML = analogy_result;
+	document.getElementById("find_analogy_result").style.display = "inline";
+	// showVizualization(targetValues = [a1, a2, b1, b2]);
+	
+}
+
 Util.events(document, {
 	// Final initalization entry point: the Javascript code inside this block
 	// runs at the end of start-up when the DOM is ready
@@ -507,6 +551,7 @@ Util.events(document, {
 		document.getElementById("find_nn_result").style.display = "none";
 		document.getElementById("find_path_result").style.display = "none";
 		document.getElementById("find_dist_result").style.display = "none";
+		document.getElementById("find_analogy_result").style.display = "none";
 	}
 
 });
