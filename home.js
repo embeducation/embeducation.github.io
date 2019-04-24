@@ -243,6 +243,7 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 
 function getTextInput(){
 	text = document.getElementById("textinput").value;
+	text = text.toLowerCase();
 	if(text == ""){
 		return null;
 	}

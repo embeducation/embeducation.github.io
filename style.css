@@ -4,8 +4,7 @@
 body {
   font: 16px/1 'Do Hyeon', sans-serif;
   /*background:transparent;*/
-  background-color: #FFFAF0;
-  /*TODO: scrolling doesn't work*/
+  background-color: #FFEFD5;
   overflow-y: scroll !important;
   overflow-x: hidden;
   color: black;
@@ -45,9 +44,10 @@ h1 {
   grid-column-end: 2;
 }
 
-/*.grayback{
-  background-color: lightgray;
-}*/
+.roundcorners{
+  /*background-color: lightgray;*/
+  border-radius: 5px;
+}
 
 button {
   border-radius: 5px;

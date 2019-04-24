@@ -65,7 +65,7 @@ style="
 		<br><br>
 
 		<!-- Add text textbox -->
-		<textarea rows="10" cols="30" id="textinput" class="grayback"></textarea>
+		<textarea rows="10" cols="30" id="textinput" class="roundcorners"></textarea>
 
 	</div>
 </div>
@@ -75,16 +75,16 @@ style="
 
 <!-- Nearest Neighbors option -->
 
-Find <select id="nn_number" class="grayback">
+Find <select id="nn_number" class="roundcorners">
   <option value="1">1</option>
   <option value="5">5</option>
   <option value="10">10</option>
   <option value="100">100</option>
 </select>  nearest neighbors for 
 
-<input type="text" name="nearest_neighbor" id="nn_word" size="25" class="grayback">
+<input type="text" name="nearest_neighbor" id="nn_word" size="25" class="roundcorners">
 
-<button id="find_nn" onclick="findNN(document.getElementById('nn_word').value, document.getElementById('nn_number').value)">
+<button id="find_nn" onclick="findNN(document.getElementById('nn_word').value.toLowerCase(), document.getElementById('nn_number').value)">
           Go
 </button>
 
@@ -97,9 +97,9 @@ Find <select id="nn_number" class="grayback">
 
 <!-- Paths option -->
 
-Find path from <input type="text" name="path" id="path_from" size="25" class="grayback"> to <input type="text" name="path" id="path_to" size="25" class="grayback">
+Find path from <input type="text" name="path" id="path_from" size="25" class="roundcorners"> to <input type="text" name="path" id="path_to" size="25" class="roundcorners">
 
-<button id="find_path" onclick="findPath(document.getElementById('path_from').value, document.getElementById('path_to').value)">
+<button id="find_path" onclick="findPath(document.getElementById('path_from').value.toLowerCase(), document.getElementById('path_to').value.toLowerCase())">
           Go
 </button>
 
@@ -112,9 +112,9 @@ Find path from <input type="text" name="path" id="path_from" size="25" class="gr
 
 <!-- Distance option -->
 
-Find distance between <input type="text" name="distance" id="dist_from" size="25" class="grayback"> and <input type="text" name="distance" id="dist_to" size="25" class="grayback">
+Find distance between <input type="text" name="distance" id="dist_from" size="25" class="roundcorners"> and <input type="text" name="distance" id="dist_to" size="25" class="roundcorners">
 
-<button id="find_dist" onclick="findDistance(document.getElementById('dist_from').value, document.getElementById('dist_to').value)">
+<button id="find_dist" onclick="findDistance(document.getElementById('dist_from').value.toLowerCase(), document.getElementById('dist_to').value.toLowerCase())">
           Go
 </button>
 
