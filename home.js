@@ -357,6 +357,7 @@ function findDistance(word1, word2) {
 
 	document.getElementById("dist_result").innerHTML = dist_result;
 	document.getElementById("find_dist_result").style.display = "inline";
+	// showVizualization(targetValues = [word1, word2]);
 }
 
 function findNN(word, number) {
@@ -389,7 +390,9 @@ function findNN(word, number) {
 		} else {
 			neighbors_result = "The " + number + " nearest neighbors to " + word  + " are: "
 		}
+		neighbors_display = []
 		for (var i = 0; i < number; i++) {
+			neighbors_display.push(neighbors[i][0])
 			if (i == neighbors.length) { break; }
 			console.log("Neighbor", i + 1, "is", neighbors[i][0]);
 			if (i == number - 1) {
@@ -402,6 +405,7 @@ function findNN(word, number) {
 	
 	document.getElementById("neighbors_result").innerHTML = neighbors_result;
 	document.getElementById("find_nn_result").style.display = "inline";
+	// showVizualization(targetValues = neighbors_display);
 }
 
 function findPath(from_word, to_word) {
@@ -487,6 +491,7 @@ function findPath(from_word, to_word) {
 	
 	document.getElementById("path_result").innerHTML = path_result;
 	document.getElementById("find_path_result").style.display = "inline";
+	// showVizualization(targetValues = path);
 }
 
 Util.events(document, {

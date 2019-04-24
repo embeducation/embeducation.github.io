@@ -121,8 +121,24 @@ Find distance between <input type="text" name="distance" id="dist_from" size="25
 <div id="find_dist_result">
 <br> <br>
 <div id="dist_result"></div>
-<br> <br>
 </div>
+
+<br> <br>
+
+<!-- Analogies option -->
+
+Going from <input type="text" name="analogies" id="analogy_a1" size="25" class="roundcorners"> to <input type="text" name="analogies" id="analogy_a2" size="25" class="roundcorners"> is the same as going from <input type="text" name="analogies" id="analogy_b1" size="25" class="roundcorners"> to
+
+<button id="find_analogy" onclick="findPath(document.getElementById('analogy_a1').value.toLowerCase(), document.getElementById('analogy_a2').value.toLowerCase(), document.getElementById('analogy_b1').value.toLowerCase())">
+          Go
+</button>
+
+<div id="find_analogy_result">
+<br> <br>
+<div id="analogy_result"></div>
+</div>
+
+<br> <br>
 
 </body>
 
