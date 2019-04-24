@@ -46,10 +46,6 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 	//current_dictY = dictY;
 	//current_dictZ = dictZ;
 
-	if (current_words == null){
-		setCurrentVariables(words_HP, dictX_HP, dictY_HP, dictZ_HP);
-	}
-
 	var getRandomColor = function() {
 		return chance.color({format: 'hex'});
 	};
@@ -334,8 +330,8 @@ function getEmbeddings(){
 			z[word] = z_coord;
 		}
 
-
-		showVizualization(words_array, x, y, z);
+		setCurrentVariables(words_array, x, y, z);
+		showVizualization();
 	  });
 	});
 
@@ -499,6 +495,7 @@ Util.events(document, {
 
 	"DOMContentLoaded": function(e) {
 		// want to load sections and classes list
+		setCurrentVariables(words_HP, dictX_HP, dictY_HP, dictZ_HP);
 		showVizualization();
 
 		// hide the nearest neighbor and path results sections on loading
