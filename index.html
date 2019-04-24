@@ -55,7 +55,20 @@ style="
 </h1>
 
 <div class="viz-container">
+	<div id="categories" class="item1"> 
+		<!-- Category buttons -->
+		<!-- TODO(smritip): create this html in JS by looping through categories dictionary -->
+		<button id="category_hp" onclick="setCategory('hp')"> 
+          HP
+		</button>
+		<button id="category_characters" onclick="setCategory('characters')"> 
+          Characters
+		</button>
+		<br><br>
+
+	</div>
 	<div id="viz" class="item1"></div>
+
 	<div id="addtext" class="item2"> 
 		<!-- Add text button -->
 		<button id="add_text" onclick="getEmbeddings()"> 
