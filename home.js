@@ -55,7 +55,7 @@ function getWord(index, targetValues){
 	//console.log("TARGETVALUES");
 	//console.log(targetValues.length);
 	//console.log(index);
-	return_word = 'not';
+	//return_word = 'not';
 	if (targetValues.length == 0){
 		//console.log("HERE");
 		return current_words[index];
@@ -67,7 +67,7 @@ function getWord(index, targetValues){
 			return word;
 		}
 		else{
-			//console.log("HERE");
+			//console.log("NOT HERE");
 			//console.log(null_word[0]);
 			//return current_words[0];
 			return '.';
@@ -102,6 +102,8 @@ function showVizualization(main_word = null, targetValues = []){//words = words_
 	//current_dictY = dictY;
 	//current_dictZ = dictZ;
 
+	console.log("TARGET VALUES");
+	console.log(targetValues);
 	var getRandomColor = function() {
 		return chance.color({format: 'hex'});
 	};
@@ -441,7 +443,7 @@ function findDistance(word1, word2) {
 
 	document.getElementById("dist_result").innerHTML = dist_result;
 	document.getElementById("find_dist_result").style.display = "inline";
-	showVizualization(targetValues = [word1, word2]);
+	showVizualization(main_word = null, targetValues = [word1, word2]);
 }
 
 function findNN(word, number) {
@@ -576,7 +578,8 @@ function findPath(from_word, to_word) {
 	
 	document.getElementById("path_result").innerHTML = path_result;
 	document.getElementById("find_path_result").style.display = "inline";
-	showVizualization(targetValues = path);
+	//console.log(path);
+	showVizualization(main_word = null, targetValues = path);
 }
 
 function findAnalogy(a1, a2, b1) {
@@ -622,7 +625,7 @@ function findAnalogy(a1, a2, b1) {
 	console.log(a2);
 	console.log("B2");
 	console.log(b2);
-	showVizualization(targetValues = [a1, a2, b1, b2]);
+	showVizualization(main_word = null, targetValues = [a1, a2, b1, b2]);
 	
 }
 
