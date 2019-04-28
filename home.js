@@ -26,6 +26,8 @@ var categories = {'hp' : {'words': words_HP, 'dictX': dictX_HP, 'dictY': dictY_H
 
 // current_* store which subset of words to use
 
+var null_word = ['null'];
+
 var current_words = null;
 
 var current_dictX = null;
@@ -48,8 +50,27 @@ function getPositionZ(word){
 	return current_dictZ[word];
 }
 
-function getWord(index){
-	return current_words[index];
+function getWord(index, targetValues){
+	//console.log("TARGETVALUES");
+	//console.log(targetValues.length);
+	//console.log(index);
+	return_word = 'not';
+	if (targetValues.length == 0){
+		//console.log("HERE");
+		return current_words[index];
+	}
+	else{
+		word = current_words[index];
+		if (targetValues.includes(word)){
+			//console.log(word);
+			return word;
+		}
+		else{
+			//console.log("HERE");
+			//console.log(null_word[0]);
+			return ".";
+		}
+	}
 }
 
 function setCategory(category) {
@@ -83,14 +104,19 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 		return chance.color({format: 'hex'});
 	};
 
-	var getColor = function(currentWord, targetWords){
+	var getColor = function(currentWord, targetValues){
 		var navy_blue = '#000080';
 		var red = '#FF0000';
-		if (targetWords.includes(currentWord)){
+		if (targetValues.includes(currentWord)){
 			return red;
 		}
 		else{
-			return navy_blue;
+			//return "rgb(0, 0, " + (Math.floor(Math.random() * 255)) + ")";
+			h = 180;
+			s = Math.floor(Math.random() * 100);
+			l = Math.floor(Math.random() * 100);
+			color = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
+			return color;
 		}
 	};
 	var getRandomFontFamily = function() {
@@ -155,8 +181,8 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 		return chance.floating({min: 1, max: Math.pow(2, 8)});
 	};
 
-	console.log("RANDOM TEXT");
-	console.log(getRandomText);
+	//console.log("RANDOM TEXT");
+	//console.log(getRandomText);
 	var renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 	renderer.setPixelRatio(devicePixelRatio);
 	renderer.setClearColor( 0xffffff, 0 );
@@ -167,13 +193,20 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 	camera.position.set(0, 0, Math.pow(2, 14));
 	var redrawInterval = 1;
 	var index = 0;
+	//var fontSize = 500;
+	console.log("CURRRENT WORDS LENGTH");
+	console.log(current_words.length)
 	var sprites = Array
 		.from({length: current_words.length})
 		.map(function() {
 
-			var textValue = getWord(index);//getRandomText(); 
+			var textValue = getWord(index, targetValues);//getRandomText(); 
+			//if (textValue == '.'){
+		//		fontSize == 10000
+	//		}
+			
 			var sprite = new THREE.TextSprite({
-				textSize: 1000,//parsed_labels, //ltext,// getRandomTextSize(),
+				textSize: 500,//parsed_labels, //ltext,// getRandomTextSize(),
 				redrawInterval: redrawInterval,
 				material: {
 					color: getColor(textValue, targetValues),//getRandomColor(),
@@ -285,6 +318,7 @@ function getTextInput(){
 function getEmbeddings(){
 	words_array = getTextInput();
 	if(words_array == null){
+		console.log("ONE");
 		return 
 	}
 	final_embeddings = null;
@@ -296,9 +330,13 @@ function getEmbeddings(){
 	opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
 	var tsne = new tsnejs.tSNE(opt); // create a tSNE instance
 
+	console.log("TWO");
+
 	// Load the model.
 	use.load().then(model => {
 	  // Embed an array of sentences.
+	  console.log("THREE");
+
 	  const words = words_array;
 	  model.embed(words).then(embeddings => {
 	    // `embeddings` is a 2D tensor consisting of the 512-dimensional embeddings for each sentence.
@@ -310,6 +348,8 @@ function getEmbeddings(){
 
 		//convert to multiple dimensional array
 		shape = embeddings.shape
+		console.log("SHAPE")
+		console.log(shape)
 		shape.reverse().map(a => {
 		  arr = arr.reduce((b, c) => {
 		  latest = b[b.length - 1]
@@ -563,7 +603,15 @@ function findAnalogy(a1, a2, b1) {
 
 	document.getElementById("analogy_result").innerHTML = analogy_result;
 	document.getElementById("find_analogy_result").style.display = "inline";
-	// showVizualization(targetValues = [a1, a2, b1, b2]);
+	console.log("A1");
+	console.log(a1);
+	console.log("BI");
+	console.log(b1);
+	console.log("A2");
+	console.log(a2);
+	console.log("B2");
+	console.log(b2);
+	showVizualization(targetValues = [a1, a2, b1, b2]);
 	
 }
 
