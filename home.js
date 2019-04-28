@@ -64,8 +64,16 @@ function setCurrentVariables(words, dictX, dictY, dictZ) {
 	current_dictZ = dictZ;
 }
 
-function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_HP, dictY = dictY_HP, dictZ = dictZ_HP, targetValues = null) {
+function removeOldVisualization(){
+	// Remove old visualization if it exists
+		vizTag = document.getElementById("viz")
+		if (vizTag.hasChildNodes()) {
+			vizTag.removeChild(vizTag.childNodes[0]);  
+		}
+}
 
+function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_HP, dictY = dictY_HP, dictZ = dictZ_HP, targetValues = null) {
+	removeOldVisualization();	
 	//current_words = words;
 	//current_dictX = dictX;
 	//current_dictY = dictY;
@@ -338,11 +346,7 @@ function getEmbeddings(){
 		var y = {};
 		var z = {};
 
-	  	// Remove old visualization if it exists
-		vizTag = document.getElementById("viz")
-		if (vizTag.hasChildNodes()) {
-			vizTag.removeChild(vizTag.childNodes[0]);  
-		}
+	  	
 
 		for (var i = 0; i < words_array.length; i++){
 			word = words_array[i];
