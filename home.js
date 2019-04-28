@@ -43,11 +43,12 @@ function getPositionX(word){
 }
 
 function getPositionY(word){
-	return current_dictY[word];
+	return current_dictY[word]*20;
 }
 
 function getPositionZ(word){
-	return current_dictZ[word];
+	//return 0;
+	return current_dictZ[word]*10;
 }
 
 function getWord(index, targetValues){
@@ -68,7 +69,8 @@ function getWord(index, targetValues){
 		else{
 			//console.log("HERE");
 			//console.log(null_word[0]);
-			return ".";
+			//return current_words[0];
+			return '.';
 		}
 	}
 }
@@ -93,7 +95,7 @@ function removeOldVisualization(){
 		}
 }
 
-function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_HP, dictY = dictY_HP, dictZ = dictZ_HP, targetValues = null) {
+function showVizualization(main_word = null, targetValues = []){//words = words_HP, dictX = dictX_HP, dictY = dictY_HP, dictZ = dictZ_HP, targetValues = null) {
 	removeOldVisualization();	
 	//current_words = words;
 	//current_dictX = dictX;
@@ -104,15 +106,23 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 		return chance.color({format: 'hex'});
 	};
 
-	var getColor = function(currentWord, targetValues){
+	var getColor = function(currentWord, main_word, targetValues){
 		var navy_blue = '#000080';
 		var red = '#FF0000';
-		if (targetValues.includes(currentWord)){
+		var burgundy = '#8B0000';
+		var indigo = '#4B0082';
+		if (currentWord == "harry"){
 			return red;
+		}
+		if (currentWord == main_word){
+			return red;
+		}
+		if (targetValues.includes(currentWord)){
+			return indigo;
 		}
 		else{
 			//return "rgb(0, 0, " + (Math.floor(Math.random() * 255)) + ")";
-			h = 180;
+			h = 240;
 			s = Math.floor(Math.random() * 100);
 			l = Math.floor(Math.random() * 100);
 			color = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
@@ -193,23 +203,23 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 	camera.position.set(0, 0, Math.pow(2, 14));
 	var redrawInterval = 1;
 	var index = 0;
-	//var fontSize = 500;
+	var fontSize = 500;
 	console.log("CURRRENT WORDS LENGTH");
 	console.log(current_words.length)
 	var sprites = Array
 		.from({length: current_words.length})
 		.map(function() {
-
+			var word = current_words[index];
 			var textValue = getWord(index, targetValues);//getRandomText(); 
-			//if (textValue == '.'){
-		//		fontSize == 10000
-	//		}
+			if (textValue == '.'){
+				fontSize == 10000
+			}
 			
 			var sprite = new THREE.TextSprite({
-				textSize: 500,//parsed_labels, //ltext,// getRandomTextSize(),
+				textSize: fontSize,//400,//parsed_labels, //ltext,// getRandomTextSize(),
 				redrawInterval: redrawInterval,
 				material: {
-					color: getColor(textValue, targetValues),//getRandomColor(),
+					color: getColor(textValue, main_word, targetValues),//getRandomColor(),
 				},
 				texture: {
 					text: textValue, //getRandomText(),//'Be happy',//getRandomText(),//'Be happy', //['Label', 'the', 'a', 'and', 'to', 'he', 'was', 'of', 'his', 'in', 'He', 'that', '--', 'on', 'as', 'had', 'Dursley', 'it', 'have', 'at', 'Mr.', 'I', 'be', 'said', 'Professor', 'all', 'were', 'Mrs.', 'you', "didn't", 'but', 'out', 'It', 'been', 'she', 'for', 'her', 'they', 'Dumbledore', 'very', 'people', 'over', 'into', 'cat', 'McGonagall', 'not', 'Harry', 'with', 'The', 'up', 'back', 'him', 'if', 'this', 'so', 'it.', 'about', "couldn't", 'down', 'their', 'would', 'could', 'what', 'never', 'even', 'them', '', ''],
@@ -218,9 +228,9 @@ function showVizualization(targetValues = []){//words = words_HP, dictX = dictX_
 			}); index++;
 			(function() {
 
-				var x = getPositionX(textValue);
-				var y = getPositionY(textValue);
-				var z = getPositionZ(textValue);
+				var x = getPositionX(word);
+				var y = getPositionY(word);
+				var z = getPositionZ(word);
 				
 				sprite.position
 						.setX(x)
@@ -431,7 +441,7 @@ function findDistance(word1, word2) {
 
 	document.getElementById("dist_result").innerHTML = dist_result;
 	document.getElementById("find_dist_result").style.display = "inline";
-	// showVizualization(targetValues = [word1, word2]);
+	showVizualization(targetValues = [word1, word2]);
 }
 
 function findNN(word, number) {
@@ -479,7 +489,8 @@ function findNN(word, number) {
 	
 	document.getElementById("neighbors_result").innerHTML = neighbors_result;
 	document.getElementById("find_nn_result").style.display = "inline";
-	// showVizualization(targetValues = neighbors_display);
+	neighbors_display.push(word);
+	showVizualization(main_word = word, targetValues = neighbors_display);
 }
 
 function findPath(from_word, to_word) {
@@ -565,7 +576,7 @@ function findPath(from_word, to_word) {
 	
 	document.getElementById("path_result").innerHTML = path_result;
 	document.getElementById("find_path_result").style.display = "inline";
-	// showVizualization(targetValues = path);
+	showVizualization(targetValues = path);
 }
 
 function findAnalogy(a1, a2, b1) {
