@@ -51,6 +51,41 @@ function getPositionZ(word){
 	return current_dictZ[word]*10;
 }
 
+function dotProduct(v1, v2){
+	var answer = 0;
+	answer += v1[0]*v2[0];
+	answer += v1[1]*v2[1];
+	answer += v1[2]*v2[2];
+	//console.log(answer);
+	return answer;
+}
+
+function multiplyP(constant, vector){
+	var answer = [];
+	for (var i = 0; i < vector.length; i++){
+		answer.push(vector[i]*constant);
+	}
+
+	return answer;
+}
+
+function getPositionFromVector(word, pathWords){
+	var word1 = pathWords[0];
+	var word2 = pathWords[1];
+	console.log(word1);
+	console.log(word2);
+	var a = [getPositionX(word1), getPositionY(word1), getPositionZ(word1)];
+	console.log("A");
+	console.log(a);
+	var b = [getPositionX(word2), getPositionY(word2), getPositionZ(word2)];
+	var p = [getPositionX(word), getPositionY(word), getPositionZ(word)];
+	var ap = [p[0] - a[0], p[1]-a[1], p[2] - a[2]];
+	var ab = [b[0]-a[0], b[1]-a[1], b[2]-a[2]];
+	result = multiplyP(dotProduct(ap, ab)/dotProduct(ab, ab),ab);
+	final = [0, a[1] + result[1], a[2]+ result[2]];
+	return final;
+}
+
 function getWord(index, targetValues){
 	//console.log("TARGETVALUES");
 	//console.log(targetValues.length);
@@ -95,7 +130,7 @@ function removeOldVisualization(){
 		}
 }
 
-function showVizualization(main_word = null, targetValues = []){//words = words_HP, dictX = dictX_HP, dictY = dictY_HP, dictZ = dictZ_HP, targetValues = null) {
+function showVizualization(main_word = null, targetValues = [], pathWords = []){//words = words_HP, dictX = dictX_HP, dictY = dictY_HP, dictZ = dictZ_HP, targetValues = null) {
 	removeOldVisualization();	
 	//current_words = words;
 	//current_dictX = dictX;
@@ -230,9 +265,20 @@ function showVizualization(main_word = null, targetValues = []){//words = words_
 			}); index++;
 			(function() {
 
-				var x = getPositionX(word);
-				var y = getPositionY(word);
-				var z = getPositionZ(word);
+				if (pathWords.length > 0){
+					console.log("HERE");
+					var x = getPositionFromVector(word, pathWords)[0];
+					var y = getPositionFromVector(word, pathWords)[1];
+					var z = getPositionFromVector(word, pathWords)[2];
+					console.log(x);
+					console.log(y);
+					console.log(z);
+				}
+				else{
+					var x = getPositionX(word);
+					var y = getPositionY(word);
+					var z = getPositionZ(word);
+				}
 				
 				sprite.position
 						.setX(x)
@@ -446,6 +492,16 @@ function findDistance(word1, word2) {
 	showVizualization(main_word = null, targetValues = [word1, word2]);
 }
 
+/*
+function getVectorDifference(word1, word2){
+	var vector = [];
+	vector.push(getPositionX(word1)-getPositionX(word2));
+	vector.push(getPositionY(word1)-getPositionY(word2));
+	vector.push(getPositionZ(word1)-getPositionZ(word2));
+	return vector;
+}
+*/
+
 function findNN(word, number) {
 	var neighbors_result;
 
@@ -575,11 +631,14 @@ function findPath(from_word, to_word) {
 		}
 	}
 
+	//distanceVector = getVectorDifference(from_word, to_word);
+
+	path_words = [from_word, to_word];
 	
 	document.getElementById("path_result").innerHTML = path_result;
 	document.getElementById("find_path_result").style.display = "inline";
 	//console.log(path);
-	showVizualization(main_word = null, targetValues = path);
+	showVizualization(main_word = null, targetValues = path, pathWords = path_words);
 }
 
 function findAnalogy(a1, a2, b1) {
