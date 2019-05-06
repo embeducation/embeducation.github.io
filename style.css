@@ -4,10 +4,10 @@
 body {
   font: 16px/1 'Do Hyeon', sans-serif;
   /*background:transparent;*/
-  background-color: #FFEFD5;
+  background-color: black;
   overflow-y: scroll !important;
   overflow-x: hidden;
-  color: black;
+  color: white;
 }
 
 h1 {
@@ -19,7 +19,7 @@ h1 {
   margin-left: 10%;
   margin-top: 0px;
   padding-top: 4px;
-  color: black;
+  color: white;
 }
 
 .logo{
@@ -51,10 +51,11 @@ h1 {
 
 button {
   border-radius: 5px;
+  border-color : #696969 ;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  background-color: #F5DEB3; /* Green */
-  color: black;
+  background-color: #696969; /* Green */
+  color: white;
 
 
 }

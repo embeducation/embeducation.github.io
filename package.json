@@ -1,0 +1,27 @@
+{
+  "name": "embeducation.github.io",
+  "version": "1.0.0",
+  "description": "Visualizing Word Embeddings for Kids",
+  "main": "THREE.TextSprite.js",
+  "dependencies": {
+    "@tensorflow-models/universal-sentence-encoder": "^1.0.3",
+    "@tensorflow/tfjs": "^1.0.0",
+    "pca-js": "^1.0.2",
+    "requirejs": "^2.3.6",
+    "utils": "^0.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/embeducation/embeducation.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/embeducation/embeducation.github.io/issues"
+  },
+  "homepage": "https://github.com/embeducation/embeducation.github.io#readme"
+}

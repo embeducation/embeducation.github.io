@@ -422,29 +422,10 @@ function getEmbeddings(){
 		  tsne.step(); // every time you call this, solution gets better
 		}
 		pca_embeddings = tsne.getSolution(); // Y is an array of 3-D points that you can plot
-	  
-
-		/*
-	  	var data = arr[0];
-	  	var vectors = PCA.getEigenVectors(data);
-	  	console.log("VECTORS");
-	  	console.log(vectors);
-
-	  	var first = PCA.computePercentageExplained(vectors, vectors[0]);
-	  	console.log("FIRST");
-	  	console.log(first);
-
-	  	var adData = PCA.computeAdjustedData(data, vectors[0]);
-
-	  	console.log("AD DATA");
-	  	console.log(adData);
-	  	*/
 
 		var x = {};
 		var y = {};
 		var z = {};
-
-	  	
 
 		for (var i = 0; i < words_array.length; i++){
 			word = words_array[i];
