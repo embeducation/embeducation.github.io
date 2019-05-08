@@ -438,9 +438,14 @@ function getEmbeddings(){
 		var y = {};
 		var z = {};
 
+		new_words_array = []
+
 		for (var i = 0; i < words_array.length; i++){
 			word = words_array[i];
 			embedding = pca_embeddings[i];
+			if (new_words_array.indexOf(word) < 0){
+				new_words_array.push(word)
+			}
 			x_coord = embedding[0];
 			y_coord = embedding[1];
 			z_coord = embedding[2];
@@ -449,7 +454,7 @@ function getEmbeddings(){
 			z[word] = z_coord;
 		}
 
-		setCurrentVariables(words_array, x, y, z);
+		setCurrentVariables(new_words_array, x, y, z);
 		showVizualization();
 	  });
 	});
