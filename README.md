@@ -1,6 +1,10 @@
 # Embeducation
 
-Embeducation is a web application that introduces the idea of how words can be represented by features. It involves the theme of representation and reasoning by generating word embeddings and plotting these in three-dimensional space.  It also touches upon ethics and society as it explores how bias from context can be present in embeddings.  The activity targets students in grades 6-8. 
+Embeducation is a web application that introduces the idea of how words can be represented by features. It involves the theme of representation and reasoning by generating word embeddings and plotting these in three-dimensional space.  It also touches upon ethics and society as it explores how bias from context can be present in embeddings.  The activity targets students in grades 6-8.
+
+For a full workshop focused on word embeddings, we have created teacher and student guides, which can be found here:
+[Teacher Guide](https://docs.google.com/document/d/1cynpGGOEmiPifDturp9LlT82RiwGgCv5zL5QM0zZ3os/edit?usp=sharing)
+[Student Guide](https://docs.google.com/document/d/14R8Echvk32ot8cHxTmW8tK4LH0f8wEXhhBTSplbvYsk/edit?usp=sharing)
 
 ## Getting Started
 
