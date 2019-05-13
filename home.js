@@ -133,6 +133,9 @@ function setCurrentVariables(words, dictX, dictY, dictZ) {
 	current_dictX = dictX;
 	current_dictY = dictY;
 	current_dictZ = dictZ;
+
+	console.log("current_words");
+	console.log(current_words);
 }
 
 function removeOldVisualization(){
@@ -161,10 +164,10 @@ function showVizualization(main_word = null, targetValues = [], pathWords = []){
 		var red = '#FF0000';
 		var orange = '#FFA500';
 		var burgundy = '#8B0000';
-		var indigo = '#4B0082';
-		if (currentWord == "harry"){
-			return orange;
-		}
+		var indigo = '#8A2BE2';
+		//if (currentWord == "harry"){
+		//	return orange;
+		//}
 		if (currentWord == main_word){
 			return orange;
 		}
@@ -172,12 +175,17 @@ function showVizualization(main_word = null, targetValues = [], pathWords = []){
 			return indigo;
 		}
 		else{
-			//return "rgb(0, 0, " + (Math.floor(Math.random() * 255)) + ")";
-			h = 240;
+			//return "rgb(0, 0, " + (Math.floor(Math.random() * 300)) + ")";
+			
+			h = 180;
 			s = Math.floor(Math.random() * 100);
-			l = Math.floor(Math.random() * 100);
+			//console.log("S:")
+			//console.log(s)
+			//console.log("L:")
+			l = Math.floor(Math.random() * 10)+50;
 			color = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
 			return color;
+			
 		}
 	};
 	var getRandomFontFamily = function() {
