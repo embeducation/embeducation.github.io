@@ -27,7 +27,7 @@ var dictZ_HP = {'harry': -1.2530267954218854, 'said': -3.5418757025639054, 'ron'
 // Note: embeddings are the same as above, so will use the same dictionaries for X, Y, and Z coords (see 'categories' dictionary)
 // but design allows for categories to use different embedding vectors if need be (set in 'categories' dictionary)
 
-var words_characters = ['harry', 'ron', 'hermione', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'pettigrew', 'buckbeak', 'trelawney', 'vernon', 'percy', 'george', 'marge', 'hippogriff', 'voldemort', 'boggart', 'goyle', 'james', 'petunia', 'hedwig', 'dudley', 'parvati', 'lily', 'ginny', 'seamus', 'remus', 'longbottom', 'oliver', 'cho', 'thomas', 'drew', 'wormtail']
+var words_characters = ['harry', 'ron', 'hermione', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'pettigrew', 'buckbeak', 'trelawney', 'vernon', 'percy', 'george', 'marge', 'hippogriff', 'voldemort', 'boggart', 'goyle', 'james', 'petunia', 'hedwig', 'dudley', 'parvati', 'lily', 'ginny', 'seamus', 'remus', 'longbottom', 'oliver', 'cho', 'thomas', 'drew', 'wormtail', 'magic']
 
 var words_houses = ['gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw']
 
