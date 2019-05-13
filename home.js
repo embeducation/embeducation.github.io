@@ -130,6 +130,9 @@ function setCurrentVariables(words, dictX, dictY, dictZ) {
 	current_dictX = dictX;
 	current_dictY = dictY;
 	current_dictZ = dictZ;
+
+	console.log("current_words");
+	console.log(current_words);
 }
 
 function removeOldVisualization(){
