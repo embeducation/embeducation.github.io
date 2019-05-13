@@ -31,11 +31,20 @@ var words_characters = ['harry', 'ron', 'hermione', 'lupin', 'snape', 'hagrid', 
 
 var words_houses = ['gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw']
 
+var words_witches = ['hermione', 'weasley', 'mcgonagall', 'trelawney', 'parvati', 'lily', 'ginny', 'cho']
+
+var words_wizards = ['harry', 'ron', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'neville', 'potter', 'weasley', 'percy', 'george', 'fred', 'voldemort', 'goyle', 'james', 'seamus', 'remus', 'longbottom', 'oliver', 'thomas', 'drew']
+
+
 // store all category info:
 
 var categories = {'hp' : {'words': words_HP, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP},
 				  'characters': {'words': words_characters, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP},
-				  'houses' : {'words': words_houses, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP}}
+				  'houses' : {'words': words_houses, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP},
+				  'witches' : {'words': words_witches, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP},
+				  'wizards' : {'words': words_wizards, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP}}
+
+var categories_button_ids = {'hp': 'category_hp', 'characters': 'category_characters', 'houses': 'category_houses', 'witches': 'category_witches', 'wizards': 'category_wizards'}
 
 // current_* store which subset of words to use
 
@@ -48,6 +57,8 @@ var current_dictX = null;
 var current_dictY = null;
 
 var current_dictZ = null;
+
+var current_category = null;
 
 //var PCA = require('pca-js');
 
@@ -124,6 +135,21 @@ function getWord(index, targetValues){
 }
 
 function setCategory(category) {
+	// categories = Object.keys(categories_button_ids)
+	// for (var i = 0; i < categories.length; i++) {
+	// 	cat = categories[i]
+	// 	if (cat == category) {
+	// 		document.getElementById(categories_button_ids[cat]).style.backgroundColor = "#FF8C00";
+	// 	} else {
+	// 		document.getElementById(categories_button_ids[category]).style.backgroundColor = "#696969";
+	// 	}
+	// }
+	// document.getElementById(categories_button_ids[category]).style.backgroundColor = "#FF8C00";
+	if (current_category != null) {
+		document.getElementById(categories_button_ids[current_category]).style.backgroundColor = "#696969";
+	}
+	current_category = category
+	document.getElementById(categories_button_ids[category]).style.backgroundColor = "#FF8C00";
 	setCurrentVariables(categories[category]['words'], categories[category]['dictX'], categories[category]['dictY'], categories[category]['dictZ']);
 	showVizualization();
 }

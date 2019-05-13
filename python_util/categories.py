@@ -15,6 +15,10 @@ dictZ_HP = {'harry': 0.006576621610657809, 'said': 0.09954568366953387, 'ron': 0
 
 #words_characters = ['harry', 'ron', 'hermione', 'professor', 'lupin', 'black', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'aunt', 'pettigrew', 'madam', 'uncle', 'wood', 'buckbeak', 'trelawney', 'vernon', 'mr', 'percy', 'george', 'marge', 'blacks', 'peter', 'hippogriff', 'pomfrey', 'voldemort', 'father', 'dad', 'boggart', 'goyle', 'james', 'petunia', 'werewolf', 'muggles', 'muggle', 'silver', 'person', 'dursleys', 'severus', 'hedwig', 'teachers', 'mum', 'rosmerta', 'dudley', 'parvati', 'family', 'granger', 'lily', 'ginny', 'hooch', 'seamus', 'lady', 'alicia', 'katie', 'remus', 'prophet', 'longbottom', 'tom', 'oliver', 'cho', 'thomas', 'monster', 'drew', 'wormtail', 'gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw']
 
-words_characters = ['harry', 'ron', 'hermione', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'pettigrew', 'buckbeak', 'trelawney', 'vernon', 'percy', 'george', 'marge', 'hippogriff', 'voldemort', 'boggart', 'goyle', 'james', 'petunia', 'hedwig', 'dudley', 'parvati', 'lily', 'ginny', 'seamus', 'remus', 'longbottom', 'oliver', 'cho', 'thomas', 'drew', 'wormtail']
+words_characters = ['harry', 'ron', 'hermione', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'pettigrew', 'buckbeak', 'trelawney', 'vernon', 'percy', 'george', 'marge', 'hippogriff', 'voldemort', 'boggart', 'goyle', 'james', 'petunia', 'hedwig', 'dudley', 'parvati', 'lily', 'ginny', 'seamus', 'remus', 'longbottom', 'oliver', 'cho', 'thomas', 'drew', 'wormtail', 'magic']
 
 words_houses = ['gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw']
+
+words_witches = ['hermione', 'weasley', 'mcgonagall', 'trelawney', 'parvati', 'lily', 'ginny', 'cho']
+
+words_wizards = ['harry', 'ron', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'neville', 'potter', 'weasley', 'percy', 'george', 'fred', 'voldemort', 'goyle', 'james', 'seamus', 'remus', 'longbottom', 'oliver', 'thomas', 'drew']
