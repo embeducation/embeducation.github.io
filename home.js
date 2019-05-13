@@ -27,12 +27,15 @@ var dictZ_HP = {'harry': -1.2530267954218854, 'said': -3.5418757025639054, 'ron'
 // Note: embeddings are the same as above, so will use the same dictionaries for X, Y, and Z coords (see 'categories' dictionary)
 // but design allows for categories to use different embedding vectors if need be (set in 'categories' dictionary)
 
-var words_characters = ['harry', 'ron', 'hermione', 'professor', 'lupin', 'black', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'aunt', 'pettigrew', 'madam', 'uncle', 'wood', 'buckbeak', 'trelawney', 'vernon', 'mr', 'percy', 'george', 'marge', 'blacks', 'peter', 'hippogriff', 'pomfrey', 'voldemort', 'father', 'dad', 'boggart', 'goyle', 'james', 'petunia', 'werewolf', 'muggles', 'muggle', 'silver', 'person', 'dursleys', 'severus', 'hedwig', 'teachers', 'mum', 'rosmerta', 'dudley', 'parvati', 'family', 'granger', 'lily', 'ginny', 'hooch', 'seamus', 'lady', 'alicia', 'katie', 'remus', 'prophet', 'longbottom', 'tom', 'oliver', 'cho', 'thomas', 'monster', 'drew', 'wormtail', 'gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw']
+var words_characters = ['harry', 'ron', 'hermione', 'lupin', 'snape', 'hagrid', 'dumbledore', 'malfoy', 'sirius', 'scabbers', 'neville', 'potter', 'weasley', 'mcgonagall', 'crookshanks', 'pettigrew', 'buckbeak', 'trelawney', 'vernon', 'percy', 'george', 'marge', 'hippogriff', 'voldemort', 'boggart', 'goyle', 'james', 'petunia', 'hedwig', 'dudley', 'parvati', 'lily', 'ginny', 'seamus', 'remus', 'longbottom', 'oliver', 'cho', 'thomas', 'drew', 'wormtail']
+
+var words_houses = ['gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw']
 
 // store all category info:
 
 var categories = {'hp' : {'words': words_HP, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP},
-				  'characters': {'words': words_characters, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP}}
+				  'characters': {'words': words_characters, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP},
+				  'houses' : {'words': words_houses, 'dictX': dictX_HP, 'dictY': dictY_HP, 'dictZ': dictZ_HP}}
 
 // current_* store which subset of words to use
 
@@ -279,20 +282,20 @@ function showVizualization(main_word = null, targetValues = [], pathWords = []){
 			}); index++;
 			(function() {
 
-				if (pathWords.length > 0){
-					console.log("HERE");
-					var x = getPositionFromVector(word, pathWords)[0];
-					var y = getPositionFromVector(word, pathWords)[1];
-					var z = getPositionFromVector(word, pathWords)[2];
-					console.log(x);
-					console.log(y);
-					console.log(z);
-				}
-				else{
+				// if (pathWords.length > 0){
+				// 	console.log("HERE");
+				// 	var x = getPositionFromVector(word, pathWords)[0];
+				// 	var y = getPositionFromVector(word, pathWords)[1];
+				// 	var z = getPositionFromVector(word, pathWords)[2];
+				// 	console.log(x);
+				// 	console.log(y);
+				// 	console.log(z);
+				// }
+				// else{
 					var x = getPositionX(word);
 					var y = getPositionY(word);
 					var z = getPositionZ(word);
-				}
+				// }
 				
 				sprite.position
 						.setX(x)
@@ -441,9 +444,14 @@ function getEmbeddings(){
 		var y = {};
 		var z = {};
 
+		new_words_array = []
+
 		for (var i = 0; i < words_array.length; i++){
 			word = words_array[i];
 			embedding = pca_embeddings[i];
+			if (new_words_array.indexOf(word) < 0){
+				new_words_array.push(word)
+			}
 			x_coord = embedding[0];
 			y_coord = embedding[1];
 			z_coord = embedding[2];
@@ -452,7 +460,7 @@ function getEmbeddings(){
 			z[word] = z_coord;
 		}
 
-		setCurrentVariables(words_array, x, y, z);
+		setCurrentVariables(new_words_array, x, y, z);
 		showVizualization();
 	  });
 	});
@@ -500,6 +508,8 @@ function getVectorDifference(word1, word2){
 function findNN(word, number) {
 	var neighbors_result;
 
+	console.log("NUM", number);
+
 	// Check word exists in embeddings
 	if (!current_words.includes(word)) {
 		neighbors_result = word + " does not exist in the graph. Please try another word."
@@ -529,6 +539,9 @@ function findNN(word, number) {
 		}
 		neighbors_display = []
 		for (var i = 0; i < number; i++) {
+			if (i == neighbors.length) { // if fewer neighbors
+				break;
+			}
 			neighbors_display.push(neighbors[i][0])
 			if (i == neighbors.length) { break; }
 			console.log("Neighbor", i + 1, "is", neighbors[i][0]);
@@ -636,6 +649,28 @@ function findPath(from_word, to_word) {
 	showVizualization(main_word = null, targetValues = path, pathWords = path_words);
 }
 
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+
 function findAnalogy(a1, a2, b1) {
 	analogy_result = ""
 
@@ -689,8 +724,7 @@ Util.events(document, {
 
 	"DOMContentLoaded": function(e) {
 		// want to load sections and classes list
-		setCurrentVariables(words_HP, dictX_HP, dictY_HP, dictZ_HP);
-		showVizualization();
+		setCategory("characters");
 
 		// hide the nearest neighbor and path results sections on loading
 		document.getElementById("find_nn_result").style.display = "none";

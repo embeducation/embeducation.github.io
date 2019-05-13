@@ -11,7 +11,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">     
       <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-		<script src="three.js"></script>
+		<script src="js/three.js"></script>
 		<script src="https://d3js.org/d3.v5.min.js"></script>
 		<script src="https://unpkg.com/three"></script>
         <script src="https://unpkg.com/three.texttexture"></script>
@@ -19,13 +19,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
 		<script src="https://unpkg.com/three.texttexture@19.0.0"></script>
-
-		
-		<script type="https://cdn.jsdelivr.net/npm/pca-js@1.0.0/pca.min.js"></script>
-		
-
-
-		<script src="THREE.TextSprite.js"></script>
+		<script src="js/THREE.TextSprite.js"></script>
 		<link
 			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
 			rel="stylesheet"
@@ -35,8 +29,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.18/chance.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder@1.0.1"></script>
-		<script src="util.js"></script>
-		<script src="tsne.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/tsne.js"></script>
 		<script src="home.js"></script>
 
 
@@ -55,14 +49,17 @@ style="
 </h1>
 
 <div class="viz-container">
-	<div id="categories" class="item1"> 
+	<div id="categories" class="item4"> 
 		<!-- Category buttons -->
 		<!-- TODO(smritip): create this html in JS by looping through categories dictionary -->
 		<button id="category_hp" onclick="setCategory('hp')"> 
-          HP
+          Book 3
 		</button>
 		<button id="category_characters" onclick="setCategory('characters')"> 
           Characters
+		</button>
+		<button id="category_characters" onclick="setCategory('houses')"> 
+          Houses
 		</button>
 		<br><br>
 
@@ -81,9 +78,25 @@ style="
 		<textarea rows="10" cols="30" id="textinput" class="roundcorners"></textarea>
 
 	</div>
-</div>
 
-<br><br>
+	<div id="charinfo" class="item5 dropdown">
+
+		  <button onclick="myFunction()" class="dropbtn">Get to Know the Characters!</button>
+		  <div id="myDropdown" class="dropdown-content">
+		    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Harry_Potter">Harry</a>
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Ron_Weasley">Ron</a>
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Hermione_Granger">Hermione</a>
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Albus_Dumbledore">Dumbledore</a>
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Lord_Voldemort">Voldemort</a>
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Severus_Snape">Snape</a>
+		    <a target="_blank" href="https://en.wikipedia.org/wiki/Ginny_Weasley">Ginny</a>
+		  </div>
+
+
+	</div>
+
+</div>
 
 
 <!-- Nearest Neighbors option -->
