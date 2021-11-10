@@ -338,18 +338,18 @@ function showVizualization(main_word = null, targetValues = [], pathWords = []){
 			scene.add(sprite);
 			return sprite;
 		});
-	var controls = new THREE.OrbitControls(camera, renderer.domElement);
-	controls.maxDistance = camera.far/2;
-	controls.enableDamping = true;
-	controls.dampingFactor = 1/8;
-	controls.rotateSpeed = 1/4;
-	controls.zoomSpeed = 1;
-	controls.keyPanSpeed = 1/2;
+// 	var controls = new THREE.OrbitControls(camera, renderer.domElement);
+// 	controls.maxDistance = camera.far/2;
+// 	controls.enableDamping = true;
+// 	controls.dampingFactor = 1/8;
+// 	controls.rotateSpeed = 1/4;
+// 	controls.zoomSpeed = 1;
+// 	controls.keyPanSpeed = 1/2;
 	var renderScene = function() {
 		renderer.setSize(document.body.offsetWidth/1.5, document.body.offsetHeight/1.5);
 		camera.aspect = renderer.domElement.width / renderer.domElement.height;
 		camera.updateProjectionMatrix();
-		controls.update();
+// 		controls.update();
 		renderer.render(scene, camera);
 	};
 	window.addEventListener('resize', renderScene, false);
